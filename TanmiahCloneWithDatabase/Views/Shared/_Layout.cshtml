@@ -1,0 +1,252 @@
+﻿@using System.Web.Optimization;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <link href="~/Content/Common/css/style.css?v=726" rel="stylesheet" />
+    <link href="~/Content/Common/images/favicon.ico" rel="icon" type="image/x-icon" />
+    @Styles.Render("~/Content/Common/css/style.css?v=726")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-9 col-12 position-s">
+                    <a class="tanmiah-logo" href="index.html">
+                        <img src="~/Content/Common/images/logo/tanmiah.png" alt="tanmiah" />
+                        <img src="~/Content/Common/images/logo/tanmiah-sticky.png" alt="tanmiah">
+                    </a>
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="about-overview.html">ABOUT</a>
+                            <ul class="secondary-menu">
+                                <li>
+                                    <a href="javscript:void(0)">ABOUT TANMIAH</a>
+                                    <ul class="tertiary-menu">
+                                        <li>
+                                            <a href="javscript:void(0)">MISSION, VISION &amp; VALUES</a>
+                                        </li>
+                                        <li>
+                                            <a href="javscript:void(0)">OUR PEOPLE</a>
+                                        </li>
+                                        <li>
+                                            <a href="javscript:void(0)">QUALITY &amp; SAFETY</a>
+                                        </li>
+                                        <li>
+                                            <a href="javscript:void(0)">OUR AWARDS</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javscript:void(0)">OUR COMPANIES</a>
+                                    <ul class="tertiary-menu">
+                                        <li>
+                                            <a href="javscript:void(0)">AGRICULTURAL DEVELOPMENT CO.</a>
+                                        </li>
+                                        <li>
+                                            <a href="javscript:void(0)">DESERT HILLS</a>
+                                        </li>
+                                        <li>
+                                            <a href="javscript:void(0)">SUPREME FOODS PROCESSING CO.</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javscript:void(0)">SUSTAINABILITY &amp; COMPLIANCE</a>
+                                    <ul class="tertiary-menu">
+                                        <li>
+                                            <a href="javscript:void(0)">OUR INITIATIVE</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="investor-overview.html">INVESTORS</a>
+                        </li>
+                        <li>
+                            <a href="products.html">PRODUCTS</a>
+                        </li>
+                        <li>
+                            <a href="recipes.html">RECIPES</a>
+                        </li>
+                        <li>
+                            <a href="careers.html">CAREERS</a>
+                        </li>
+                    </ul>
+                    <a class="hamburger-btn" href="javascript:void(0)">
+                        Hamburger Button
+                        <span></span>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-12 col-right">
+                    <a class="language" href="~/ar/index.html">عربى</a>
+                    <a class="btn-primary has-icon" href="support.html">
+                        <span class="icon">
+                            <img src="~/Content/Common/images/support-icon.svg" alt="Support" />
+                        </span> SUPPORT
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+    <div class=" body-content">
+        <footer>
+            <div class="footer-sitemap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row footer-row-links">
+                                <div class="col-3">
+                                    <h4 class="footer-parent-links"><a href="javascript:void(0)">About</a></h4>
+                                    <ul class="ul-compact">
+                                        <li>
+                                            <a href="javascript:void(0)">About Tanmiah</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Agricultural Development Co.</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Desert Hills</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Supreme Foods Processing Co.</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Sustainability & Compliance</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-3">
+                                    <h4 class="footer-parent-links"><a href="javascript:void(0)">Investors</a></h4>
+                                    <ul class="ul-compact">
+                                        <li>
+                                            <a href="javascript:void(0)">Financial Reports</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Corporate Governance</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Media</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Stock Information</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-3 col-bottom">
+                                    <h4 class="footer-parent-links"><a href="javascript:void(0)">Products</a></h4>
+                                    <h4 class="footer-parent-links"><a href="javascript:void(0)">Recipes</a></h4>
+                                    <h4 class="footer-parent-links"><a href="javascript:void(0)">Careers</a></h4>
+                                </div>
+                                <div class="col-3">
+                                    <h4 class="footer-parent-links"><a href="javascript:void(0)">Support</a></h4>
+                                    <ul class="ul-compact">
+                                        <li>
+                                            <a href="javascript:void(0)">Place a Bulk Order</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Make an Enquiry</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Locate Us</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">FAQ</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-auto col-social">
+                            <div class="social-block">
+                                <h4>CONNECT WITH TANMIAH</h4>
+                                <div class="social-row">
+                                    <a href="javascript:void(0)">
+                                        <img src="~/Content/Common/images/social-icons/social-fb.svg" alt="Facebook">
+                                        <img src="~/Content/Common/images/social-icons/social-fb-hover.svg" alt="Facebook">
+                                    </a>
+                                    <a href="javascript:void(0)">
+                                        <img src="~/Content/Common/images/social-icons/social-tw.svg" alt="Twitter">
+                                        <img src="~/Content/Common/images/social-icons/social-tw-hover.svg" alt="Twitter">
+                                    </a>
+                                    <a href="javascript:void(0)">
+                                        <img src="~/Content/Common/images/social-icons/social-ln.svg" alt="Linkedin">
+                                        <img src="~/Content/Common/images/social-icons/social-ln-hover.svg" alt="Linkedin">
+                                    </a>
+                                    <a href="javascript:void(0)">
+                                        <img src="~/Content/Common/images/social-icons/social-in.svg" alt="Instagram">
+                                        <img src="~/Content/Common/images/social-icons/social-in-hover.svg" alt="Instagram">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+
+                <div class="footer-company-logos">
+                    <div class="company-box">
+                        <a href="javascript:void(0)">
+                            <img src="~/Content//Common/images/footer/company-logo-1.png" alt="Company Logo">
+                        </a>
+                    </div>
+
+                    <div class="company-box">
+                        <a href="javascript:void(0)">
+                            <img src="~/Content//Common/images/footer/company-logo-2.png" alt="Company Logo">
+                        </a>
+                    </div>
+
+                    <div class="company-box">
+                        <a href="javascript:void(0)">
+                            <img src="~/Content//Common/images/footer/company-logo-3.png" alt="Company Logo">
+                        </a>
+                    </div>
+
+                    <div class="company-box logo-box">
+                        <a href="javascript:void(0)">
+                            <img src="~/Content/Common/images/footer/tanmiah-logo-footer.png" alt="Tanmiah Logo">
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="positioned-container">
+                    <div class="container">
+                        <div class="footer-bottom-contents">
+                            <div class="footer-bottom-nav">
+                                <a href="javascript:void(0)">Corporate</a>
+                                <a href="javascript:void(0)">Terms</a>
+                            </div>
+                            <p>
+                                Copyright © 2019 Tanmiah Food Group. All rights reserved.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/Common/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/Common/js/lib/swiper.min.js"></script>
+    <script src="~/Content/Common/js/lib/swiper.reducer.js"></script>
+    <script src="~/Content/Common/js/lib/parallax/parallax.min.js"></script>
+    <script src="~/Content/Common/js/default.js"></script>
+
+</body>
+</html>

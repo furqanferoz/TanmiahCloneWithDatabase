@@ -19,5 +19,15 @@ namespace TanmiahCloneWithDatabase
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
+        public static void RegisterViewEngins(ICollection<IViewEngine> engines)
+        {
+            engines.Clear();
+            engines.Add(new RazorViewEngine()
+            {
+
+                PartialViewLocationFormats = new[] { "~/Views/PartialView/{0}.cshtml" }
+
+            });
+        }
     }
 }
