@@ -18,6 +18,7 @@ namespace TanmiahCloneWithDatabase
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            
         }
         public static void RegisterViewEngins(ICollection<IViewEngine> engines)
         {

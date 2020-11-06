@@ -1,0 +1,26 @@
+﻿@model System.Data.DataTable
+
+@if (Model != null)
+{
+    for (int i = 0; i < Model.Rows.Count; i++)
+    {
+
+        var imagepath = Model.Rows[i][4];
+        <div class="icon-n-text">
+            @* Image Tag *@
+            <strong><img src="@Url.Content(Convert.ToString(imagepath))"  width="100px" height="100px"></strong>
+
+            @* Title Tag *@
+            <span>@Model.Rows[i][1]</span>
+        </div>
+
+        @*Name Tag*@
+
+        <h3 class="text-box__heading">@Model.Rows[i][2]</h3>
+
+        @*Description Tag*@
+        <p class="text-box__disc">@Model.Rows[i][3]</p>
+    }
+
+
+}
