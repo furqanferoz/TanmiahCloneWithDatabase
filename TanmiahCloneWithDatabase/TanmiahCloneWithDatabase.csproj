@@ -326,6 +326,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BreadCrumbController.cs" />
     <Compile Include="Controllers\HeaderCartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -359,7 +360,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\PartialView\_HeaderCart.cshtml" />
     <Content Include="Views\HeaderCart\Edit.cshtml" />
-    <Content Include="Views\HeaderCart\Index.cshtml" />
+    <Content Include="Views\PartialView\_BreadCrumb.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -369,6 +370,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BreadCrumb\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

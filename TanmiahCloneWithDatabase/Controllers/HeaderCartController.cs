@@ -89,9 +89,20 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: HeaderCart/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(HeaderCartEditModel headerCartEditModel)
         {
-            return View();   
+            using (SqlConnection Conn = new SqlConnection(connectionString))
+            {
+                Conn.Open();
+                string query = "Update BannerDetail SET BannerTitle = @Title, BannerName = @Name, BannerDesc = @Description, BannerImage = @Image";
+                SqlCommand sqlCommand = new SqlCommand(query, Conn);
+                sqlCommand.Parameters.AddWithValue("@Title",headerCartEditModel.Tile);
+                sqlCommand.Parameters.AddWithValue("@Name",headerCartEditModel.Name);
+                sqlCommand.Parameters.AddWithValue("@Description",headerCartEditModel.Description);
+                sqlCommand.Parameters.AddWithValue("@Image",headerCartEditModel.Image);
+                sqlCommand.ExecuteNonQuery();
+            }
+            return RedirectToAction("Index","Home");
         }
 
         // GET: HeaderCart/Delete/5
