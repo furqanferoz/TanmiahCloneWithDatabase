@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,10 +11,19 @@ namespace TanmiahCloneWithDatabase.Controllers
 {
     public class BreadCrumbController : Controller
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
+
         // GET: BreadCrumb
         public ActionResult Index()
         {
-            return View();
+            DataTable dataTable = new DataTable();
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("Select * from BreadCrum", sqlConnection);
+                sqlDataAdapter.Fill(dataTable);
+            }
+            return PartialView("_BreadCrumb", dataTable);
         }
 
         // GET: BreadCrumb/Details/5

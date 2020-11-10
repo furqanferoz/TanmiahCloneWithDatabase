@@ -1,0 +1,98 @@
+﻿
+@model System.Data.DataTable
+
+
+@if (Model != null)
+
+{
+    for (int i = 0; i < Model.Rows.Count; i++)
+    {
+        <div class="container container-medium ">
+            <div class="highlighted-content full-width-before">
+                <div class="outer-container">
+
+                    <h2 class="heading-bold-primary">@Model.Rows[i][1]</h2>
+                    <p>
+                        @Model.Rows[i][3]
+                        @*Maltodextrin, potato starch, salt, sugar, flavourings, yeast extract,vegetables (onion powder, tomato
+            puree
+            powder), caramel syrup, palm fat, thickener (guar gum), sunflower oil, sage.*@
+                    </p>
+                    <p>
+                        @Model.Rows[i][4]
+                        @*No Allergens to Declare - this product does not contain allergenic ingredients which require declaration*@
+                        @*under EU regulation 1169/2011 (Annex II).*@
+                    </p>
+                    <p>&nbsp;</p>
+                    <h2 class="heading-bold-primary">@Model.Rows[i][2]</h2>
+                    <ul class="feature-listing feature-listing--blocks feature-listing--borders">
+                        <li class="list-item">
+                            <div class="list-content">
+                                <h5 class="list-content__small-heading">@Model.Rows[i][5]</h5>
+                                <h4 class="list-content__heading">
+                                    00
+                                    <span class="list-suffix">kcal</span>
+                                </h4>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-content">
+                                <h5 class="list-content__small-heading">@Model.Rows[i][6]</h5>
+                                <h4 class="list-content__heading">
+                                    00
+                                    <span class="list-suffix">g</span>
+                                </h4>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-content">
+                                <h5 class="list-content__small-heading">@Model.Rows[i][7]</h5>
+                                <h4 class="list-content__heading">
+                                    00
+                                    <span class="list-suffix">g</span>
+                                </h4>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-content">
+                                <h5 class="list-content__small-heading">@Model.Rows[i][5]</h5>
+                                <h4 class="list-content__heading">
+                                    00
+                                    <span class="list-suffix">g</span>
+                                </h4>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-content">
+                                <h5 class="list-content__small-heading">@Model.Rows[i][6]</h5>
+                                <h4 class="list-content__heading">
+                                    00
+                                    <span class="list-suffix">g</span>
+                                </h4>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-content">
+                                <h5 class="list-content__small-heading">@Model.Rows[i][7]</h5>
+                                <h4 class="list-content__heading">
+                                    00
+                                    <span class="list-suffix">g</span>
+                                </h4>
+                            </div>
+                        </li>
+                    </ul>
+                    <p>&nbsp;</p>
+                    <h2 class="heading-bold-primary">@Model.Rows[i][8]</h2>
+                    <a href="javascript:void(0)" class="btn btn-primary">ORDER NOW</a>
+                    <span style="position: absolute;right: 15px;top: 10px;">
+                        <a href="@Url.Action("Edit", "Ingredient", new {@id=Model.Rows[i][0]})" style="margin:0px; padding:0px; background:#ffffff00; color:#337ab7">
+                            <img src="~/Content/Common/images/icons/pen.png" />
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+

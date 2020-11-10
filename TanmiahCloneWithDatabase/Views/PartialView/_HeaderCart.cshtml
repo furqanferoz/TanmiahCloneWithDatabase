@@ -1,7 +1,5 @@
 ﻿@model System.Data.DataTable
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 @if (Model != null)
 {
     for (int i = 0; i < Model.Rows.Count; i++)
@@ -25,12 +23,11 @@
         @*Description Tag*@
         <p class="text-box__disc">
             @Model.Rows[i][3]
-                <span style="position: absolute;right: 15px;top: 10px;">
-
-                    <a href="@Url.Action("Edit", "HeaderCart", new {@id=Model.Rows[i][0]})" style="margin:0px; padding:0px; background:#ffffff00; color:#337ab7">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                </span>
+            <span style="position: absolute;right: 15px;top: 10px;">
+                <a href="@Url.Action("Edit", "HeaderCart", new {@id=Model.Rows[i][0]})" style="margin:0px; padding:0px; background:#ffffff00; color:#337ab7">
+                    <img src="~/Content/Common/images/icons/pen.png" />
+                </a>
+            </span>
             </p>
     }
 

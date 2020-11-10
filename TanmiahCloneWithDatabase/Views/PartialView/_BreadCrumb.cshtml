@@ -1,26 +1,28 @@
-﻿
-@*@model TanmiahClone.Models.BreadCrumModel*@
+﻿@model System.Data.DataTable
 
 @if (Model != null)
 {
+    for (int i = 0; i < Model.Rows.Count; i++)
+    {
 
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <ul class="breadcrumbs-list">
-                        <li>
-                            <a href="javascript:void(0)">@Model.MainLink</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">@Model.SubLink</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">@Model.UnderSubLink</a>
-                        </li>
-                    </ul>
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="breadcrumbs-list">
+                            <li>
+                                <a href="javascript:void(0)">@Model.Rows[i][1]</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">@Model.Rows[i][2]</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">@Model.Rows[i][3]</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 }

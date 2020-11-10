@@ -152,6 +152,7 @@
     <Content Include="Content\Common\images\icons\dArw-Intl.png" />
     <Content Include="Content\Common\images\icons\download.svg" />
     <Content Include="Content\Common\images\icons\mobile-arrow.png" />
+    <Content Include="Content\Common\images\icons\pen.png" />
     <Content Include="Content\Common\images\icons\tick.svg" />
     <Content Include="Content\Common\images\iframe\iframe1.png" />
     <Content Include="Content\Common\images\iframe\iframe2.png" />
@@ -315,8 +316,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -327,12 +326,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BreadCrumbController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HeaderCartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IngredientController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartEditModel.cs" />
     <Compile Include="Models\HeaderCartEditModel.cs" />
+    <Compile Include="Models\IngredientEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HeaderCart.cs" />
   </ItemGroup>
@@ -361,6 +364,10 @@
     <Content Include="Views\PartialView\_HeaderCart.cshtml" />
     <Content Include="Views\HeaderCart\Edit.cshtml" />
     <Content Include="Views\PartialView\_BreadCrumb.cshtml" />
+    <Content Include="Views\PartialView\_Cart.cshtml" />
+    <Content Include="Views\Cart\Edit.cshtml" />
+    <Content Include="Views\PartialView\_IngredientDetail.cshtml" />
+    <Content Include="Views\Ingredient\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -370,7 +377,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\BreadCrumb\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
