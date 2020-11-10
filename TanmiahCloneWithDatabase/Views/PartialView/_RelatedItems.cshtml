@@ -1,0 +1,51 @@
+﻿@model System.Data.DataTable
+
+@if (Model != null)
+{
+    <div class="listing-cards listing-slider">
+        <div class="container container-medium container-auto-adjust">
+            <h2 class="main-heading-secondary">
+                YOU MIGHT ALSO BE INTERESTED IN THESE
+            </h2>
+            <div class="listing-container">
+                <div class="pos-rel">
+                    <div class="swiper-container js-listing-slider " data-rows-itemcount="2">
+                        <div class="swiper-wrapper">
+                            @for (int i = 0; i < Model.Rows.Count; i++)
+                            {
+                                
+                                <div class="swiper-slide">
+                                    <div class="card">
+                                        <a class="full-click" href="javascript:void(0)">product</a>
+                                        <div class="card-media">
+                                            <div class="card-image">
+                                                <img src="@Url.Content(Convert.ToString(Model.Rows[i][1]))" class="object-fit"
+                                                     alt="Listing image">
+                                            </div>
+                                        </div>
+                                        <div class="card-info-small">@Model.Rows[i][2]</div>
+                                        <h3>@Model.Rows[i][3]</h3>
+                                        <p>
+                                            @Model.Rows[i][4]
+                                            <span style="position: absolute;right: 15px;top: 10px;z-index:5;">
+                                                <a href="@Url.Action("Edit","RelatedItems", new {@id=Model.Rows[i][0]})" style="margin:0px; padding:0px; background:#ffffff00; color:#337ab7">
+                                                    <img src="~/Content/Common/images/icons/pen.png" />
+                                                </a>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -330,12 +330,14 @@
     <Compile Include="Controllers\HeaderCartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IngredientController.cs" />
+    <Compile Include="Controllers\RelatedItemsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CartEditModel.cs" />
     <Compile Include="Models\HeaderCartEditModel.cs" />
     <Compile Include="Models\IngredientEditModel.cs" />
+    <Compile Include="Models\RelatedItemsEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HeaderCart.cs" />
   </ItemGroup>
@@ -368,6 +370,8 @@
     <Content Include="Views\Cart\Edit.cshtml" />
     <Content Include="Views\PartialView\_IngredientDetail.cshtml" />
     <Content Include="Views\Ingredient\Edit.cshtml" />
+    <Content Include="Views\PartialView\_RelatedItems.cshtml" />
+    <Content Include="Views\RelatedItems\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
