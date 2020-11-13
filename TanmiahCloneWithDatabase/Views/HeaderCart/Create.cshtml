@@ -1,20 +1,19 @@
 ﻿@model TanmiahCloneWithDatabase.Models.HeaderCartEditModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
 }
 
-
-@using (Html.BeginForm("Edit", "HeaderCart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <h3 style="padding-top:100px; padding-left:20px">Edit a Header Cart</h3>
+    <h3 style="padding-top:100px; padding-left:20px">Create a New Header Cart</h3>
     <hr />
-    <div class="form-horizontal container center" style="padding-top:50px">
+    <div class="form-horizontal container center" style="padding-top:100px">
+
+
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Tile, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -38,9 +37,7 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group col-md-10">
-            <img src="@Url.Content(Convert.ToString("~/UploadedFiles/" + Model.Image))" style="width:280px; height:150px">
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -56,10 +53,11 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default btn-primary" />
+            <div class="col-md-offset-10 col-md-5">
+                <input type="submit" value="Create" class="btn btn-default btn-primary" />
             </div>
         </div>
     </div>
 }
+
 

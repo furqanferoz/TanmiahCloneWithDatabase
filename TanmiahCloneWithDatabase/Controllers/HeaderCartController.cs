@@ -7,25 +7,23 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using TanmiahCloneWithDatabase.Models;
+using TanmiahCloneWithDatabase.Services;
+using System.IO;
 
 namespace TanmiahCloneWithDatabase.Controllers
 {
     public class HeaderCartController : Controller
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
-
+        SqlCommand sqlCommand;
 
         [HttpGet]
         // GET: HeaderCart
         public ActionResult Index()
         {
+            GetHeader getHeader = new GetHeader();
+            int ID = 1;
             DataTable dataTable = new DataTable();
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                sqlConnection.Open();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("Select * from BannerDetail", sqlConnection);
-                sqlDataAdapter.Fill(dataTable);
-            }
+            dataTable = getHeader.GetHeaderData(ID);
             return PartialView("_HeaderCart", dataTable);
         }
 
@@ -43,18 +41,29 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: HeaderCart/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(HeaderCartEditModel headerCartEditModel, HttpPostedFileBase Image)
         {
+            CreateHeader createHeader = new CreateHeader();
+
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add insert logic here
+                if (Image != null)
 
-                return RedirectToAction("Index");
+                {
+                    string filename = System.IO.Path.GetFileName(Image.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
+                    headerCartEditModel.Image = Image.FileName;
+                    Image.SaveAs(path);
+                }
+                ViewBag.FileStatus = "File uploaded successfully.";
+                sqlCommand = createHeader.CreateHeaderData(headerCartEditModel);
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                ViewBag.FileStatus = "Error while file uploading.";
             }
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -63,70 +72,73 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Edit(int id)
         {
             HeaderCartEditModel headerCartModel = new HeaderCartEditModel();
-            DataTable dataTableEdit = new DataTable();
-            using (SqlConnection Conn = new SqlConnection(connectionString))
+            HeaderCartService headerCartService = new HeaderCartService();
+            headerCartModel = headerCartService.FillData(id);
+            if (headerCartModel != null)
             {
-                Conn.Open();
-                string query = "Select * from BannerDetail Where ID = @ID";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, Conn);
-                sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@ID", id);
-                sqlDataAdapter.Fill(dataTableEdit);
-            }
-            if (dataTableEdit.Rows.Count == 1)
-            {
-                headerCartModel.ID = Convert.ToInt32(dataTableEdit.Rows[0][0].ToString());
-                headerCartModel.Tile = (dataTableEdit.Rows[0][1].ToString());
-                headerCartModel.Name = (dataTableEdit.Rows[0][2].ToString());
-                headerCartModel.Description = (dataTableEdit.Rows[0][3].ToString());
-                headerCartModel.Image = (dataTableEdit.Rows[0][4].ToString());
                 return View(headerCartModel);
             }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction("Index");
+
         }
 
         // POST: HeaderCart/Edit/5
         [HttpPost]
-        public ActionResult Edit(HeaderCartEditModel headerCartEditModel)
+        public ActionResult Edit(HeaderCartEditModel headerCartEditModel, HttpPostedFileBase Image)
         {
-            using (SqlConnection Conn = new SqlConnection(connectionString))
+            UpdateHeader updateHeader = new UpdateHeader();
+            string type = "Update";
+            sqlCommand = new SqlCommand();
+            try
             {
-                Conn.Open();
-                string query = "Update BannerDetail SET BannerTitle = @Title, BannerName = @Name, BannerDesc = @Description, BannerImage = @Image";
-                SqlCommand sqlCommand = new SqlCommand(query, Conn);
-                sqlCommand.Parameters.AddWithValue("@Title",headerCartEditModel.Tile);
-                sqlCommand.Parameters.AddWithValue("@Name",headerCartEditModel.Name);
-                sqlCommand.Parameters.AddWithValue("@Description",headerCartEditModel.Description);
-                sqlCommand.Parameters.AddWithValue("@Image",headerCartEditModel.Image);
-                sqlCommand.ExecuteNonQuery();
+                if (Image != null)
+                    
+                {
+                    string filename = System.IO.Path.GetFileName(Image.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"),filename);
+                    headerCartEditModel.Image = Image.FileName;
+                    Image.SaveAs(path);
+                }
+                ViewBag.FileStatus = "File uploaded successfully.";
+                sqlCommand = updateHeader.UpdateHeaderData(headerCartEditModel, type);
             }
-            return RedirectToAction("Index","Home");
+            catch (Exception)
+            {
+                ViewBag.FileStatus = "Error while file uploading.";
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: HeaderCart/Delete/5
         public ActionResult Delete(int id)
         {
-
-            return View();
-
+            HeaderCartEditModel headerCartModel = new HeaderCartEditModel();
+            HeaderCartService headerCartService = new HeaderCartService();
+            headerCartModel = headerCartService.FillData(id);
+            if (headerCartModel != null)
+            {
+                return View(headerCartModel);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: HeaderCart/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(HeaderCartEditModel headerCartEditModel)
         {
+            UpdateHeader updateHeader = new UpdateHeader();
+
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                string type = "Delete";
+                sqlCommand = updateHeader.UpdateHeaderData(headerCartEditModel, type);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.FileStatus = ex;
             }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

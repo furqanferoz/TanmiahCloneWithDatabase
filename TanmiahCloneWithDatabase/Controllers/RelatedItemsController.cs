@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlItmes;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,14 +13,12 @@ namespace TanmiahCloneWithDatabase.Controllers
 {
     public class RelatedItemsController : Controller
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
-
         // GET: RelatedItems
         public ActionResult Index()
         {
             DataTable dataTable = new DataTable();
             SqlDataAdapter sqlDataAdapter;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(SqlConn.ConnectionString))
             {
                 conn.Open();
                 sqlDataAdapter = new SqlDataAdapter("Select * from RelatedItems", conn);
@@ -62,7 +61,7 @@ namespace TanmiahCloneWithDatabase.Controllers
         {
             RelatedItemsEditModel relatedItemsEditModel = new RelatedItemsEditModel();
             DataTable dataTableEdit = new DataTable();
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(SqlConn.ConnectionString))
             {
                 con.Open();
                 string editQuery = "Select * from RelatedItems where ID = @ID";
@@ -88,7 +87,7 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(RelatedItemsEditModel relatedItemsEditModel)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(SqlConn.ConnectionString))
             {
                 con.Open();
                 string updateQuery = "Update RelatedItems Set RelatedImage = @Image, RelatedName = @Name, RelatedTitle = @Title, RelatedDesc = @Description where ID = @ID";
