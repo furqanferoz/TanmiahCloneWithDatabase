@@ -6,23 +6,24 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TanmiahCloneWithDatabase.Models;
+using TanmiahCloneWithDatabase.Services;
+using static TanmiahCloneWithDatabase.Services.GetBreadCrumb;
 
 namespace TanmiahCloneWithDatabase.Controllers
 {
     public class BreadCrumbController : Controller
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
-
+        GetBreadCrumb getBreadCrumb;
+        DataTable dataTable;
+        SqlCommand sqlCommand;
         // GET: BreadCrumb
         public ActionResult Index()
         {
-            DataTable dataTable = new DataTable();
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                sqlConnection.Open();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("Select * from BreadCrum", sqlConnection);
-                sqlDataAdapter.Fill(dataTable);
-            }
+            int id = 1;
+            getBreadCrumb = new GetBreadCrumb();
+            dataTable = new DataTable();
+            dataTable = getBreadCrumb.GetBreadCrumbData(id);
             return PartialView("_BreadCrumb", dataTable);
         }
 
@@ -40,40 +41,39 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: BreadCrumb/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(BreadCrumbModel breadCrumbModel)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            CreateBreadCrumb createBreadCrumb = new CreateBreadCrumb();
+            sqlCommand = new SqlCommand();
+            sqlCommand = createBreadCrumb.CreateBreadCrumbData(breadCrumbModel);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: BreadCrumb/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            BreadCrumbModel breadCrumbModel = new BreadCrumbModel();
+            BreadCrumbService breadCrumbService = new BreadCrumbService();
+            breadCrumbModel = breadCrumbService.FillBreadCrumb(id);
+            if (breadCrumbModel != null)
+            {
+                return View(breadCrumbModel);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: BreadCrumb/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(BreadCrumbModel breadCrumb)
         {
-            try
-            {
-                // TODO: Add update logic here
+            UpdateBreadCrumb updateBreadCrum = new UpdateBreadCrumb();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            string type = "Update";
+            sqlCommand = new SqlCommand();
+
+            sqlCommand = updateBreadCrum.UpdateBreadCrumbData(breadCrumb, type);
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: BreadCrumb/Delete/5
@@ -84,18 +84,20 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: BreadCrumb/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(BreadCrumbModel breadCrumbModel)
         {
+            UpdateBreadCrumb updateBreadCrumb = new UpdateBreadCrumb();
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                string type = "Delete";
+                sqlCommand = updateBreadCrumb.UpdateBreadCrumbData(breadCrumbModel,type);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.FileStatus = ex;
             }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

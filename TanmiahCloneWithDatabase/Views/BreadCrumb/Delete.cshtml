@@ -1,0 +1,44 @@
+﻿@model TanmiahCloneWithDatabase.Models.BreadCrumbModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3 class="container" style="padding-top:100px; padding-left:20px">Are you sure you want to delete this?</h3>
+<hr />
+<div class="container center" style="padding-top:25px">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MainLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainLink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubLink)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default btn-primary" />
+        </div>
+    }
+</div>

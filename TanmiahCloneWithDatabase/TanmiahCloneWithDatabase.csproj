@@ -334,11 +334,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BreadCrumbModel.cs" />
     <Compile Include="Models\CartEditModel.cs" />
     <Compile Include="Models\HeaderCartEditModel.cs" />
     <Compile Include="Models\IngredientEditModel.cs" />
     <Compile Include="Models\RelatedItemsEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BreadCrumbService.cs" />
     <Compile Include="Services\HeaderCartService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -374,6 +376,9 @@
     <Content Include="Views\HeaderCart\Edit.cshtml" />
     <Content Include="Views\HeaderCart\Create.cshtml" />
     <Content Include="Views\HeaderCart\Delete.cshtml" />
+    <Content Include="Views\BreadCrumb\Edit.cshtml" />
+    <Content Include="Views\BreadCrumb\Create.cshtml" />
+    <Content Include="Views\BreadCrumb\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
