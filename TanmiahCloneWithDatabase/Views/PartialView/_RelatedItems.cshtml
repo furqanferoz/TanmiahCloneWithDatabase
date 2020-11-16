@@ -13,13 +13,13 @@
                         <div class="swiper-wrapper">
                             @for (int i = 0; i < Model.Rows.Count; i++)
                             {
-                                
+
                                 <div class="swiper-slide">
                                     <div class="card">
                                         <a class="full-click" href="javascript:void(0)">product</a>
                                         <div class="card-media">
                                             <div class="card-image">
-                                                <img src="@Url.Content(Convert.ToString(Model.Rows[i][1]))" class="object-fit"
+                                                <img src="@Url.Content("~/UploadedFiles/"+(Model.Rows[i][1]))" class="object-fit"
                                                      alt="Listing image">
                                             </div>
                                         </div>

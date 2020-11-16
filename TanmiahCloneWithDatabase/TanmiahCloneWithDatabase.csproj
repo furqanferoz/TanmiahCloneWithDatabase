@@ -344,6 +344,7 @@
     <Compile Include="Services\CartService.cs" />
     <Compile Include="Services\HeaderCartService.cs" />
     <Compile Include="Services\IngredientService.cs" />
+    <Compile Include="Services\RelatedItemsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -374,7 +375,6 @@
     <Content Include="Views\PartialView\_IngredientDetail.cshtml" />
     <Content Include="Views\Ingredient\Edit.cshtml" />
     <Content Include="Views\PartialView\_RelatedItems.cshtml" />
-    <Content Include="Views\RelatedItems\Edit.cshtml" />
     <Content Include="Views\HeaderCart\Edit.cshtml" />
     <Content Include="Views\HeaderCart\Create.cshtml" />
     <Content Include="Views\HeaderCart\Delete.cshtml" />
@@ -385,6 +385,8 @@
     <Content Include="Views\Cart\Delete.cshtml" />
     <Content Include="Views\Ingredient\Create.cshtml" />
     <Content Include="Views\Ingredient\Delete.cshtml" />
+    <Content Include="Views\RelatedItems\Create.cshtml" />
+    <Content Include="Views\RelatedItems\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
