@@ -1,24 +1,19 @@
 ﻿@model TanmiahCloneWithDatabase.Models.CartEditModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
 }
 
 
-
+<h4 class="container" style="padding-top:100px; padding-left:28px">Create a New Card</h4>
+<hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
 
-    <h3 class="container" style="padding-top:100px;padding-left:25px">Edit a Card Component</h3>
-    <hr/>
-    <div class="form-horizontal  container center" style="padding-top:25px">
-
+    <div class="form-horizontal container center" style="padding-top:25px" >
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -35,26 +30,17 @@
             </div>
         </div>
 
-        <div class="form-group col-md-10">
-            <img src="@Url.Content(Convert.ToString("~/UploadedFiles/" + Model.Image))" style="width:280px; height:150px">
-        </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", @type = "file" } })
+                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 text-success">
-                @ViewBag.FileStatus
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default btn-primary" />
+                <input type="submit" value="Create" class="btn btn-default btn-primary" />
             </div>
         </div>
     </div>

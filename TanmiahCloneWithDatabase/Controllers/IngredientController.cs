@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TanmiahCloneWithDatabase.Models;
+using TanmiahCloneWithDatabase.Services;
 
 namespace TanmiahCloneWithDatabase.Controllers
 {
     public class IngredientController : Controller
     {
-        string ConnectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
+        SqlCommand sqlCommand;
         // GET: Ingredient
         public ActionResult Index()
         {
+            GetIngredient getIngredient = new GetIngredient();
+            int ID = 1;
             DataTable dataTable = new DataTable();
-            using (SqlConnection Conn = new SqlConnection(ConnectionString))
-            {
-                Conn.Open();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("Select * from IngredientsDetail", Conn);
-                sqlDataAdapter.Fill(dataTable);
-            }
+            dataTable = getIngredient.GetIngredientData(ID);
             return PartialView("_IngredientDetail", dataTable);
         }
 
@@ -40,45 +35,30 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: Ingredient/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(IngredientEditModel ingredientEditModel, HttpPostedFileBase Image)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            CreateIngredient createIngredient = new CreateIngredient();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            sqlCommand = new SqlCommand();
+
+            sqlCommand = createIngredient.CreateIngredientData(ingredientEditModel);
+
+
+            return RedirectToAction("Index", "Home");
         }
+
+
         [HttpGet]
         // GET: Ingredient/Edit/5
         public ActionResult Edit(int id)
         {
-            IngredientEditModel ingredientEditModel = new IngredientEditModel();
-            DataTable dataTableEdit = new DataTable();
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            IngredientEditModel ingredientModel = new IngredientEditModel();
+            IngredientService ingredentService = new IngredientService();
+            ingredientModel = ingredentService.FillData(id);
+            if (ingredientModel != null)
             {
-                con.Open();
-                string query = "Select * from IngredientsDetail where ID = @ID";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, con);
-                sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@ID", id);
-                sqlDataAdapter.Fill(dataTableEdit);
+                return View(ingredientModel);
             }
-            if (dataTableEdit.Rows.Count == 1)
-            {
-                ingredientEditModel.ID = Convert.ToInt32(dataTableEdit.Rows[0][0].ToString());
-                ingredientEditModel.Title = dataTableEdit.Rows[0][1].ToString();
-                ingredientEditModel.DescriptionOne = dataTableEdit.Rows[0][3].ToString();
-                ingredientEditModel.DescriptionSec = dataTableEdit.Rows[0][4].ToString();
-                ingredientEditModel.Protein = dataTableEdit.Rows[0][5].ToString();
-                ingredientEditModel.Carbohydrate = dataTableEdit.Rows[0][6].ToString();
-                ingredientEditModel.Fat = dataTableEdit.Rows[0][7].ToString();
-                return View(ingredientEditModel);
-            }
-
             return RedirectToAction("Index");
         }
 
@@ -86,44 +66,45 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(IngredientEditModel ingredientEditModel)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                conn.Open();
-                string updateQuery = "Update IngredientsDetail Set IngredientTitle = @Title, IngredientDesc = @Desc," +
-                    " IngredientDescSec = @DescSec, IngredientProtein = @Protein, IngredientCarbohydrate = @Carbohydrate, IngredientFat = @Fat";
-                SqlCommand sqlCommand = new SqlCommand(updateQuery,conn);
-                sqlCommand.Parameters.AddWithValue("@Title",ingredientEditModel.Title);
-                sqlCommand.Parameters.AddWithValue("@Desc", ingredientEditModel.DescriptionOne);
-                sqlCommand.Parameters.AddWithValue("@DescSec", ingredientEditModel.DescriptionSec);
-                sqlCommand.Parameters.AddWithValue("@Protein",ingredientEditModel.Protein);
-                sqlCommand.Parameters.AddWithValue("@Carbohydrate", ingredientEditModel.Carbohydrate);
-                sqlCommand.Parameters.AddWithValue("@Fat", ingredientEditModel.Fat);
-                sqlCommand.ExecuteNonQuery();
+            UpdateIngredient updateIngredient = new UpdateIngredient();
+            string type = "Update";
+            sqlCommand = new SqlCommand();
 
-            }
-            return RedirectToAction("Index","Home");
+            sqlCommand = updateIngredient.UpdateIngredientData(ingredientEditModel,type);
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Ingredient/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            IngredientEditModel IngredientModel = new IngredientEditModel();
+            IngredientService ingredientService = new IngredientService();
+            IngredientModel = ingredientService.FillData(id);
+            if (IngredientModel != null)
+            {
+                return View(IngredientModel);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: Ingredient/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(IngredientEditModel ingredientEditModel)
         {
+            UpdateIngredient updateIngredient = new UpdateIngredient();
+
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                string type = "Delete";
+                sqlCommand = updateIngredient.UpdateIngredientData(ingredientEditModel, type);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.FileStatus = ex;
             }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

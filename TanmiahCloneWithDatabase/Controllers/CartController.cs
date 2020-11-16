@@ -7,22 +7,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TanmiahCloneWithDatabase.Models;
+using TanmiahCloneWithDatabase.Services;
 
 namespace TanmiahCloneWithDatabase.Controllers
 {
     public class CartController : Controller
     {
         string connectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
+        private SqlCommand sqlCommand;
+
         // GET: Cart
         public ActionResult Index()
         {
+            GetCart getCart= new GetCart();
+            int ID = 1;
             DataTable dataTable = new DataTable();
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                sqlConnection.Open();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("Select * from Cart", sqlConnection);
-                sqlDataAdapter.Fill(dataTable);
-            }
+            dataTable = getCart.GetCartData(ID);
             return PartialView("_Cart", dataTable);
         }
 
@@ -40,82 +40,102 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: Cart/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CartEditModel cartEditModel, HttpPostedFileBase Image)
         {
+            CreateCart createCart= new CreateCart();
+
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add insert logic here
+                if (Image != null)
 
-                return RedirectToAction("Index");
+                {
+                    string filename = System.IO.Path.GetFileName(Image.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
+                    cartEditModel.Image = Image.FileName;
+                    Image.SaveAs(path);
+                }
+                ViewBag.FileStatus = "File uploaded successfully.";
+                sqlCommand = createCart.CreateCartData(cartEditModel);
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                ViewBag.FileStatus = "Error while file uploading.";
             }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         // GET: Cart/Edit/5
         public ActionResult Edit(int id)
         {
-            CartEditModel cartEditModel = new CartEditModel();
-            DataTable dataTableEdit = new DataTable();
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            CartEditModel CartModel = new CartEditModel();
+            CartService CartService = new CartService();
+            CartModel = CartService.FillData(id);
+            if (CartModel != null)
             {
-                sqlConnection.Open();
-                string query = "select * from Cart where ID = @ID";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, sqlConnection);
-                sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@ID",id);
-                sqlDataAdapter.Fill(dataTableEdit);
+                return View(CartModel);
             }
-            if(dataTableEdit.Rows.Count == 1)
-            {
-                cartEditModel.ID =Convert.ToInt32(dataTableEdit.Rows[0][0].ToString());
-                cartEditModel.Title = dataTableEdit.Rows[0][1].ToString();
-                cartEditModel.Description = dataTableEdit.Rows[0][2].ToString();
-                cartEditModel.Image = dataTableEdit.Rows[0][3].ToString();
-                return View(cartEditModel);
-            }
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         // POST: Cart/Edit/5
         [HttpPost]
-        public ActionResult Edit(CartEditModel cartEditModel)
+        public ActionResult Edit(CartEditModel cartEditModel, HttpPostedFileBase Image)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            UpdateCart updateCart = new UpdateCart();
+            string type = "Update";
+            sqlCommand = new SqlCommand();
+            try
             {
-                conn.Open();
-                string editQuery = "Update Cart Set CartTitle = @Title, CartDesc = @Description, CartImage = @Image";
-                SqlCommand sqlCommand = new SqlCommand(editQuery,conn);
-                sqlCommand.Parameters.AddWithValue("@Title",cartEditModel.Title);
-                sqlCommand.Parameters.AddWithValue("@Description",cartEditModel.Description);
-                sqlCommand.Parameters.AddWithValue("@Image",cartEditModel.Image);
-                sqlCommand.ExecuteNonQuery();
+                if (Image != null)
+
+                {
+                    string filename = System.IO.Path.GetFileName(Image.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
+                    cartEditModel.Image = Image.FileName;
+                    Image.SaveAs(path);
+                }
+                ViewBag.FileStatus = "File uploaded successfully.";
+                sqlCommand = updateCart.UpdateCartData(cartEditModel, type);
             }
-                return RedirectToAction("Index", "Home");
+            catch (Exception)
+            {
+                ViewBag.FileStatus = "Error while file uploading.";
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Cart/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            CartEditModel CartModel = new CartEditModel();
+            CartService cartService = new CartService();
+            CartModel = cartService.FillData(id);
+            if (CartModel != null)
+            {
+                return View(CartModel);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: Cart/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(CartEditModel cartEditModel)
         {
+            UpdateCart updateCart = new UpdateCart();
+
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                string type = "Delete";
+                sqlCommand = updateCart.UpdateCartData(cartEditModel, type);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.FileStatus = ex;
             }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

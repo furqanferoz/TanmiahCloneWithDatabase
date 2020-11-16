@@ -1,0 +1,88 @@
+﻿@model TanmiahCloneWithDatabase.Models.IngredientEditModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h4 class="container center" style="padding-top:100px;padding-left:25px">Delete a Component</h4>
+<hr />
+<h3 class="container center">Are you sure you want to delete this?</h3>
+<div class="container center">
+
+    <dl class="dl-horizontal" style="padding-top:25px;">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TitleOne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TitleOne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionOne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionOne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionSec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionSec)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Protein)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Protein)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Carbohydrate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Carbohydrate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderTitle)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default btn-primary" /> 
+        </div>
+    }
+</div>
