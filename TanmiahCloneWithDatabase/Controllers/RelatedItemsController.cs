@@ -107,23 +107,34 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: RelatedItems/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            RelatedItemsEditModel relatedItemsModel = new RelatedItemsEditModel();
+            RelatedItemsService itemsService = new RelatedItemsService();
+            relatedItemsModel = itemsService.FillData(id);
+            if (relatedItemsModel != null)
+            {
+                return View(relatedItemsModel);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: RelatedItems/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(RelatedItemsEditModel itemsEditModel)
         {
+            UpdateItems updateItems = new UpdateItems();
+
+            sqlCommand = new SqlCommand();
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                string type = "Delete";
+                sqlCommand = updateItems.UpdateItemsData(itemsEditModel, type);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.FileStatus = ex;
             }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

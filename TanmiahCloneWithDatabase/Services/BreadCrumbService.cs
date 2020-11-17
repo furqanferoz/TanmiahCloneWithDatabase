@@ -14,7 +14,7 @@ namespace TanmiahCloneWithDatabase.Services
         GetBreadCrumb GetBreadCrumb = new GetBreadCrumb();
         DataTable dataTable;
         BreadCrumbModel breadCrumbModel;
-        public BreadCrumbModel FillBreadCrumb(int id)
+        public BreadCrumbModel FillData(int id)
         {
             dataTable = new DataTable();
             breadCrumbModel = new BreadCrumbModel();

@@ -54,7 +54,7 @@ namespace TanmiahCloneWithDatabase.Controllers
         {
             BreadCrumbModel breadCrumbModel = new BreadCrumbModel();
             BreadCrumbService breadCrumbService = new BreadCrumbService();
-            breadCrumbModel = breadCrumbService.FillBreadCrumb(id);
+            breadCrumbModel = breadCrumbService.FillData(id);
             if (breadCrumbModel != null)
             {
                 return View(breadCrumbModel);
@@ -79,7 +79,14 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: BreadCrumb/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            BreadCrumbModel breadCrumbModel = new BreadCrumbModel();
+            BreadCrumbService breadCrumbService = new BreadCrumbService();
+            breadCrumbModel = breadCrumbService.FillData(id);
+            if (breadCrumbModel != null)
+            {
+                return View(breadCrumbModel);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: BreadCrumb/Delete/5
