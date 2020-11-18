@@ -45,18 +45,20 @@ namespace TanmiahCloneWithDatabase.Controllers
             CreateCart createCart= new CreateCart();
 
             sqlCommand = new SqlCommand();
+            string filename = "";
             try
             {
                 if (Image != null)
 
                 {
-                    string filename = System.IO.Path.GetFileName(Image.FileName);
+                    filename = System.IO.Path.GetFileName(Image.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
                     cartEditModel.Image = Image.FileName;
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
                 sqlCommand = createCart.CreateCartData(cartEditModel);
+                ViewBag.ImageUrl = "~/ UploadedFiles" + filename;
             }
             catch (Exception)
             {
