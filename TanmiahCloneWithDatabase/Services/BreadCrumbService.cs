@@ -9,17 +9,26 @@ using TanmiahCloneWithDatabase.Models;
 
 namespace TanmiahCloneWithDatabase.Services
 {
-    public class BreadCrumbService
+    
+    public class BreadCrumbService : IBreadCrumbService
     {
-        GetBreadCrumb GetBreadCrumb = new GetBreadCrumb();
+        
         DataTable dataTable;
         BreadCrumbModel breadCrumbModel;
+
+
+        private IGetBreadCrumb _getBreadCrumb;
+        public BreadCrumbService(IGetBreadCrumb getBreadCrumb)
+        {
+            _getBreadCrumb = getBreadCrumb;
+        }
+
         public BreadCrumbModel FillData(int id)
         {
             dataTable = new DataTable();
             breadCrumbModel = new BreadCrumbModel();
 
-            dataTable =GetBreadCrumb.GetBreadCrumbData(id);
+            dataTable = _getBreadCrumb.GetBreadCrumbData(id);
             if (dataTable.Rows.Count == 1)
             {
                 breadCrumbModel.ID = Convert.ToInt32(dataTable.Rows[0][0]);
@@ -32,7 +41,7 @@ namespace TanmiahCloneWithDatabase.Services
         }
     }
 
-    public class GetBreadCrumb
+    public class GetBreadCrumb : IGetBreadCrumb
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -53,7 +62,9 @@ namespace TanmiahCloneWithDatabase.Services
                 return dataTable;
             }
         }
-        public class UpdateBreadCrumb
+
+
+        public class UpdateBreadCrumb : IUpdateBreadCrumb
         {
             SqlCommand sqlCommand;
             SqlConnection sqlConnection;
@@ -76,11 +87,12 @@ namespace TanmiahCloneWithDatabase.Services
                 }
             }
         }
-        public class CreateBreadCrumb
+
+
+        public class CreateBreadCrumb : ICreateBreadCrumb
         {
             SqlCommand sqlCommand;
             SqlConnection sqlConnection;
-
             public SqlCommand CreateBreadCrumbData(BreadCrumbModel breadCrumbModel)
             {
                 using (sqlConnection = new SqlConnection(SqlConn.ConnectionString))

@@ -14,16 +14,29 @@ namespace TanmiahCloneWithDatabase.Controllers
 {
     public class BreadCrumbController : Controller
     {
-        GetBreadCrumb getBreadCrumb;
         DataTable dataTable;
         SqlCommand sqlCommand;
+        BreadCrumbModel BreadCrumbModel;
+
+        private IBreadCrumbService _breadCrumbService;
+        private IUpdateBreadCrumb _updateBreadCrumb;
+        private IGetBreadCrumb _getBreadCrumb;
+        private ICreateBreadCrumb _createBreadCrumb;
+        public BreadCrumbController(ICreateBreadCrumb createBreadCrumb, IGetBreadCrumb getBreadCrumb, IUpdateBreadCrumb updateBreadCrumb, IBreadCrumbService breadCrumbService, BreadCrumbModel breadCrumbModel)
+        {
+            this.BreadCrumbModel = breadCrumbModel;
+            this._breadCrumbService = breadCrumbService;
+            this._getBreadCrumb = getBreadCrumb;
+            this._createBreadCrumb = createBreadCrumb;
+            this._updateBreadCrumb = updateBreadCrumb;
+        }
+
         // GET: BreadCrumb
         public ActionResult Index()
         {
             int id = 1;
-            getBreadCrumb = new GetBreadCrumb();
             dataTable = new DataTable();
-            dataTable = getBreadCrumb.GetBreadCrumbData(id);
+            dataTable = this._getBreadCrumb.GetBreadCrumbData(id);
             return PartialView("_BreadCrumb", dataTable);
         }
 
@@ -43,21 +56,19 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Create(BreadCrumbModel breadCrumbModel)
         {
-            CreateBreadCrumb createBreadCrumb = new CreateBreadCrumb();
             sqlCommand = new SqlCommand();
-            sqlCommand = createBreadCrumb.CreateBreadCrumbData(breadCrumbModel);
+            sqlCommand = this._createBreadCrumb.CreateBreadCrumbData(breadCrumbModel);
             return RedirectToAction("Index", "Home");
         }
 
         // GET: BreadCrumb/Edit/5
         public ActionResult Edit(int id)
         {
-            BreadCrumbModel breadCrumbModel = new BreadCrumbModel();
-            BreadCrumbService breadCrumbService = new BreadCrumbService();
-            breadCrumbModel = breadCrumbService.FillData(id);
-            if (breadCrumbModel != null)
+           
+            this.BreadCrumbModel = this._breadCrumbService.FillData(id);
+            if (this.BreadCrumbModel != null)
             {
-                return View(breadCrumbModel);
+                return View(this.BreadCrumbModel);
             }
             return RedirectToAction("Index");
         }
@@ -66,25 +77,19 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(BreadCrumbModel breadCrumb)
         {
-            UpdateBreadCrumb updateBreadCrum = new UpdateBreadCrumb();
-
             string type = "Update";
             sqlCommand = new SqlCommand();
-
-            sqlCommand = updateBreadCrum.UpdateBreadCrumbData(breadCrumb, type);
-
+            sqlCommand = this._updateBreadCrumb.UpdateBreadCrumbData(breadCrumb, type);
             return RedirectToAction("Index", "Home");
         }
 
         // GET: BreadCrumb/Delete/5
         public ActionResult Delete(int id)
         {
-            BreadCrumbModel breadCrumbModel = new BreadCrumbModel();
-            BreadCrumbService breadCrumbService = new BreadCrumbService();
-            breadCrumbModel = breadCrumbService.FillData(id);
-            if (breadCrumbModel != null)
+            this.BreadCrumbModel = this._breadCrumbService.FillData(id);
+            if (this.BreadCrumbModel != null)
             {
-                return View(breadCrumbModel);
+                return View(this.BreadCrumbModel);
             }
             return RedirectToAction("Index");
         }
@@ -93,12 +98,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Delete(BreadCrumbModel breadCrumbModel)
         {
-            UpdateBreadCrumb updateBreadCrumb = new UpdateBreadCrumb();
             sqlCommand = new SqlCommand();
             try
             {
                 string type = "Delete";
-                sqlCommand = updateBreadCrumb.UpdateBreadCrumbData(breadCrumbModel,type);
+                sqlCommand = this._updateBreadCrumb.UpdateBreadCrumbData(breadCrumbModel,type);
             }
             catch (Exception ex)
             {
