@@ -359,8 +359,12 @@
     <Compile Include="Infrefaces\BreadCrumb\ICreateBreadCrumb.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IGetBreadCrumb.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IBreadCrumbService.cs" />
+    <Compile Include="Infrefaces\Cart\ICreateCart.cs" />
+    <Compile Include="Infrefaces\Cart\IGetCart.cs" />
+    <Compile Include="Infrefaces\Cart\ICartService.cs" />
     <Compile Include="Services\IngredientService.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IUpdateBreadCrumb.cs" />
+    <Compile Include="Infrefaces\Cart\IUpdateCart.cs" />
     <Compile Include="Services\RelatedItemsService.cs" />
   </ItemGroup>
   <ItemGroup>

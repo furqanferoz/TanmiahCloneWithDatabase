@@ -9,16 +9,22 @@ using TanmiahCloneWithDatabase.Models;
 
 namespace TanmiahCloneWithDatabase.Services
 {
-    public class CartService
+    public class CartService : ICartService
     {
-        GetCart getcartClass = new GetCart();
+      
         CartEditModel cartEditModel = new CartEditModel();
         DataTable dataTable;
+        private IGetCart _getCart;
+
+        public CartService(IGetCart getCart)
+        {
+            this._getCart = getCart;
+        }
 
         public CartEditModel FillData(int id)
         {
             dataTable = new DataTable();
-            dataTable = getcartClass.GetCartData(id);
+            dataTable = _getCart.GetCartData(id);
             if (dataTable.Rows.Count == 1)
             {
                 cartEditModel.ID = Convert.ToInt32(dataTable.Rows[0][0]);
@@ -32,7 +38,7 @@ namespace TanmiahCloneWithDatabase.Services
     }
 
     
-    public class GetCart
+    public class GetCart : IGetCart
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -56,7 +62,7 @@ namespace TanmiahCloneWithDatabase.Services
     }
 
 
-    public class CreateCart
+    public class CreateCart : ICreateCart
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -72,14 +78,13 @@ namespace TanmiahCloneWithDatabase.Services
                 sqlCommand.Parameters.AddWithValue("@CartTitle", cartEditModel.Title);
                 sqlCommand.Parameters.AddWithValue("@CartDesc", cartEditModel.Description);
                 sqlCommand.Parameters.AddWithValue("@CartImage", cartEditModel.Image);
-                //sqlCommand.Parameters.AddWithValue("@IsActive", "1");
                 sqlCommand.ExecuteNonQuery();
             }
             return sqlCommand;
         }
     }
 
-    public class UpdateCart
+    public class UpdateCart : IUpdateCart
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;

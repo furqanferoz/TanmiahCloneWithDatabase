@@ -13,16 +13,29 @@ namespace TanmiahCloneWithDatabase.Controllers
 {
     public class CartController : Controller
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["TanmiahClone"].ConnectionString;
+
         private SqlCommand sqlCommand;
+        private IUpdateCart _updateCart;
+        private ICreateCart _createCart;
+        private IGetCart _getCart;
+        private ICartService _cartService;
+        private CartEditModel CartEditModel;
+
+        public CartController(IUpdateCart updateCart, ICreateCart createCart, IGetCart getCart, ICartService cartService, CartEditModel cartModel)
+        {
+            this.CartEditModel = cartModel;
+            this._updateCart = updateCart;
+            this._createCart = createCart;
+            this._getCart = getCart;
+            this._cartService = cartService;
+        }
 
         // GET: Cart
         public ActionResult Index()
         {
-            GetCart getCart= new GetCart();
             int ID = 1;
             DataTable dataTable = new DataTable();
-            dataTable = getCart.GetCartData(ID);
+            dataTable = this._getCart.GetCartData(ID);
             return PartialView("_Cart", dataTable);
         }
 
@@ -42,8 +55,6 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Create(CartEditModel cartEditModel, HttpPostedFileBase Image)
         {
-            CreateCart createCart= new CreateCart();
-
             sqlCommand = new SqlCommand();
             string filename = "";
             try
@@ -57,7 +68,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
-                sqlCommand = createCart.CreateCartData(cartEditModel);
+                sqlCommand = this._createCart.CreateCartData(cartEditModel);
                 ViewBag.ImageUrl = "~/ UploadedFiles" + filename;
             }
             catch (Exception)
@@ -71,12 +82,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: Cart/Edit/5
         public ActionResult Edit(int id)
         {
-            CartEditModel CartModel = new CartEditModel();
-            CartService CartService = new CartService();
-            CartModel = CartService.FillData(id);
-            if (CartModel != null)
+            
+            this.CartEditModel = this._cartService.FillData(id);
+            if (this.CartEditModel != null)
             {
-                return View(CartModel);
+                return View(this.CartEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -85,7 +95,6 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(CartEditModel cartEditModel, HttpPostedFileBase Image)
         {
-            UpdateCart updateCart = new UpdateCart();
             string type = "Update";
             sqlCommand = new SqlCommand();
             try
@@ -99,7 +108,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
-                sqlCommand = updateCart.UpdateCartData(cartEditModel, type);
+                sqlCommand = this._updateCart.UpdateCartData(cartEditModel, type);
             }
             catch (Exception)
             {
@@ -111,12 +120,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: Cart/Delete/5
         public ActionResult Delete(int id)
         {
-            CartEditModel CartModel = new CartEditModel();
-            CartService cartService = new CartService();
-            CartModel = cartService.FillData(id);
-            if (CartModel != null)
+            this.CartEditModel = this._cartService.FillData(id);
+            if (this.CartEditModel != null)
             {
-                return View(CartModel);
+                return View(this.CartEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -125,13 +132,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Delete(CartEditModel cartEditModel)
         {
-            UpdateCart updateCart = new UpdateCart();
-
             sqlCommand = new SqlCommand();
             try
             {
                 string type = "Delete";
-                sqlCommand = updateCart.UpdateCartData(cartEditModel, type);
+                sqlCommand = this._updateCart.UpdateCartData(cartEditModel, type);
             }
             catch (Exception ex)
             {

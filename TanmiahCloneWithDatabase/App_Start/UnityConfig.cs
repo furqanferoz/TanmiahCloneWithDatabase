@@ -16,10 +16,22 @@ namespace TanmiahCloneWithDatabase
             // register all your components with the container here
             // it is NOT necessary to register your controllers
             // e.g. container.RegisterType<ITestService, TestService>();
+
+
+            //Bread Crumb Interface Register
             container.RegisterType<ICreateBreadCrumb, CreateBreadCrumb>();
             container.RegisterType<IGetBreadCrumb, GetBreadCrumb>();
             container.RegisterType<IUpdateBreadCrumb, UpdateBreadCrumb>();
             container.RegisterType<IBreadCrumbService, BreadCrumbService>();
+
+            //Cart Interface Register
+            container.RegisterType<IUpdateCart, UpdateCart>();
+            container.RegisterType<ICreateCart, CreateCart>();
+            container.RegisterType<IGetCart, GetCart>();
+            container.RegisterType<ICartService, CartService>();
+
+            //HeaderCart Interface Register
+
 
 
 
