@@ -9,16 +9,21 @@ using TanmiahCloneWithDatabase.Models;
 
 namespace TanmiahCloneWithDatabase.Services
 {
-    public class RelatedItemsService
+    public class RelatedItemsService : IRelatedItemsService
     {
-        GetRelatedItems getRelatedItems = new GetRelatedItems();
         RelatedItemsEditModel relatedItemsEditModel = new RelatedItemsEditModel();
         DataTable dataTable;
+        private IGetRelatedItems _getRelatedItems;
+
+        public RelatedItemsService(IGetRelatedItems getRelatedItems)
+        {
+            this._getRelatedItems = getRelatedItems;
+        }
 
         public RelatedItemsEditModel FillData(int id)
         {
             dataTable = new DataTable();
-            dataTable = getRelatedItems.GetRelatedItemsData(id);
+            dataTable = this._getRelatedItems.GetRelatedItemsData(id);
             if (dataTable.Rows.Count == 1)
             {
                 relatedItemsEditModel.ID = Convert.ToInt32(dataTable.Rows[0][0].ToString());
@@ -32,7 +37,7 @@ namespace TanmiahCloneWithDatabase.Services
             return relatedItemsEditModel;
         }
     }
-    public class GetRelatedItems
+    public class GetRelatedItems : IGetRelatedItems
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -70,7 +75,7 @@ namespace TanmiahCloneWithDatabase.Services
             }
         }
     }
-    public class CreateItems
+    public class CreateItems : ICreateItems
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -92,7 +97,7 @@ namespace TanmiahCloneWithDatabase.Services
             return sqlCommand;
         }
     }
-    public class UpdateItems
+    public class UpdateItems : IUpdateItems
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;

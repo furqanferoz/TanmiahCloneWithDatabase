@@ -15,12 +15,27 @@ namespace TanmiahCloneWithDatabase.Controllers
     public class RelatedItemsController : Controller
     {
         SqlCommand sqlCommand;
+        private ICreateItems _createItems;
+        private IUpdateItems _updateItems;
+        private IGetRelatedItems _getRelatedItems;
+        private IRelatedItemsService _RelatedItemsService;
+        private RelatedItemsEditModel RelatedItemsEditModel;
+
+        public RelatedItemsController(ICreateItems createItems, IUpdateItems updateItems, IGetRelatedItems getRelatedItems,
+            IRelatedItemsService relatedItemsService, RelatedItemsEditModel relatedItemsEditModel)
+        {
+            this._createItems = createItems;
+            this._updateItems = updateItems;
+            this._getRelatedItems = getRelatedItems;
+            this._RelatedItemsService = relatedItemsService;
+            this.RelatedItemsEditModel = relatedItemsEditModel;
+        }
+
         // GET: RelatedItems
         public ActionResult Index()
         {
-            GetRelatedItems getItems = new GetRelatedItems();
             DataTable dataTable = new DataTable();
-            dataTable = getItems.GetRelatedItemsData();
+            dataTable = this._getRelatedItems.GetRelatedItemsData();
             return PartialView("_RelatedItems", dataTable);
         }
 
@@ -40,13 +55,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Create(RelatedItemsEditModel relatedItemsEditModel, HttpPostedFileBase Image)
         {
-            CreateItems createItems = new CreateItems();
-
             sqlCommand = new SqlCommand();
             try
             {
                 if (Image != null)
-
                 {
                     string filename = System.IO.Path.GetFileName(Image.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
@@ -54,7 +66,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
-                sqlCommand = createItems.CreateHeaderData(relatedItemsEditModel);
+                sqlCommand = this._createItems.CreateHeaderData(relatedItemsEditModel);
             }
             catch (Exception)
             {
@@ -67,12 +79,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: RelatedItems/Edit/5
         public ActionResult Edit(int id)
         {
-            RelatedItemsEditModel relatedItemsEditModel = new RelatedItemsEditModel();
-            RelatedItemsService relatedItemsService = new RelatedItemsService();
-            relatedItemsEditModel = relatedItemsService.FillData(id);
-            if (relatedItemsEditModel != null)
+            this.RelatedItemsEditModel = this._RelatedItemsService.FillData(id);
+            if (this.RelatedItemsEditModel != null)
             {
-                return View(relatedItemsEditModel);
+                return View(this.RelatedItemsEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -81,13 +91,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(RelatedItemsEditModel relatedItemsEditModel, HttpPostedFileBase Image) 
         {
-            UpdateItems updateItem = new UpdateItems();
             string type = "Update";
             sqlCommand = new SqlCommand();
             try
             {
                 if (Image != null)
-
                 {
                     string filename = System.IO.Path.GetFileName(Image.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
@@ -95,7 +103,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
-                sqlCommand = updateItem.UpdateItemsData(relatedItemsEditModel, type);
+                sqlCommand = this._updateItems.UpdateItemsData(relatedItemsEditModel, type);
             }
             catch (Exception)
             {
@@ -107,13 +115,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: RelatedItems/Delete/5
         public ActionResult Delete(int id)
         {
-
-            RelatedItemsEditModel relatedItemsModel = new RelatedItemsEditModel();
-            RelatedItemsService itemsService = new RelatedItemsService();
-            relatedItemsModel = itemsService.FillData(id);
-            if (relatedItemsModel != null)
+            this.RelatedItemsEditModel = this._RelatedItemsService.FillData(id);
+            if (this.RelatedItemsEditModel != null)
             {
-                return View(relatedItemsModel);
+                return View(this.RelatedItemsEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -122,13 +127,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Delete(RelatedItemsEditModel itemsEditModel)
         {
-            UpdateItems updateItems = new UpdateItems();
-
             sqlCommand = new SqlCommand();
             try
             {
                 string type = "Delete";
-                sqlCommand = updateItems.UpdateItemsData(itemsEditModel, type);
+                sqlCommand = this._updateItems.UpdateItemsData(itemsEditModel, type);
             }
             catch (Exception ex)
             {

@@ -369,10 +369,14 @@
     <Compile Include="Infrefaces\HeaderCart\ICreateHeader.cs" />
     <Compile Include="Infrefaces\HeaderCart\IGetHeader.cs" />
     <Compile Include="Infrefaces\HeaderCart\IHeaderCartService.cs" />
+    <Compile Include="Services\ICreateItems.cs" />
+    <Compile Include="Services\IGetRelatedItems.cs" />
     <Compile Include="Services\IngredientService.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IUpdateBreadCrumb.cs" />
     <Compile Include="Infrefaces\Cart\IUpdateCart.cs" />
     <Compile Include="Infrefaces\HeaderCart\IUpdateHeader.cs" />
+    <Compile Include="Services\IRelatedItemsService.cs" />
+    <Compile Include="Services\IUpdateItems.cs" />
     <Compile Include="Services\RelatedItemsService.cs" />
   </ItemGroup>
   <ItemGroup>
