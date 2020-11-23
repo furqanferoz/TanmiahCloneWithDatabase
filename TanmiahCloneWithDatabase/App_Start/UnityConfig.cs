@@ -30,8 +30,7 @@ namespace TanmiahCloneWithDatabase
             container.RegisterType<IGetCart, GetCart>();
             container.RegisterType<ICartService, CartService>();
 
-            //HeaderCart Interface Register
-<<<<<<< HEAD
+          
             container.RegisterType<IUpdateHeader, UpdateHeader>();
             container.RegisterType<ICreateHeader, CreateHeader>();
             container.RegisterType<IGetHeader, GetHeader>();
@@ -42,11 +41,7 @@ namespace TanmiahCloneWithDatabase
             container.RegisterType<ICreateIngredient, CreateIngredient>();
             container.RegisterType<IGetIngredient, GetIngredient>();
             container.RegisterType<IIngredientService, IngredientService>();
-=======
 
-
-
->>>>>>> parent of 2703df9... Implement Dependency Injection on HaederCart
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

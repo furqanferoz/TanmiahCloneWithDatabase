@@ -362,23 +362,16 @@
     <Compile Include="Infrefaces\Cart\ICreateCart.cs" />
     <Compile Include="Infrefaces\Cart\IGetCart.cs" />
     <Compile Include="Infrefaces\Cart\ICartService.cs" />
-<<<<<<< HEAD
-    <Compile Include="Infrefaces\HeaderCart\ICreateHeader.cs" />
-    <Compile Include="Infrefaces\HeaderCart\IGetHeader.cs" />
-    <Compile Include="Infrefaces\HeaderCart\IHeaderCartService.cs" />
     <Compile Include="Infrefaces\Ingredient\ICreateIngredient.cs" />
     <Compile Include="Infrefaces\Ingredient\IGetIngredient.cs" />
     <Compile Include="Infrefaces\Ingredient\IIngredientService.cs" />
     <Compile Include="Services\IngredientService.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IUpdateBreadCrumb.cs" />
     <Compile Include="Infrefaces\Cart\IUpdateCart.cs" />
-    <Compile Include="Infrefaces\HeaderCart\IUpdateHeader.cs" />
     <Compile Include="Infrefaces\Ingredient\IUpdateIngredient.cs" />
-=======
     <Compile Include="Services\IngredientService.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IUpdateBreadCrumb.cs" />
     <Compile Include="Infrefaces\Cart\IUpdateCart.cs" />
->>>>>>> parent of 2703df9... Implement Dependency Injection on HaederCart
     <Compile Include="Services\RelatedItemsService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -432,6 +425,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Infrefaces\HeaderCart\" />
     <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
