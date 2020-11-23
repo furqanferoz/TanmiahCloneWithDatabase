@@ -9,16 +9,21 @@ using TanmiahCloneWithDatabase.Models;
 
 namespace TanmiahCloneWithDatabase.Services
 {
-    public class IngredientService
+    public class IngredientService : IIngredientService
     {
-        GetIngredient getIngredientClass = new GetIngredient();
         IngredientEditModel ingredientEditModel = new IngredientEditModel();
         DataTable dataTable;
+        private IGetIngredient _getIngredient;
+
+        public IngredientService(IGetIngredient getIngredient)
+        {
+            this._getIngredient = getIngredient;
+        }
 
         public IngredientEditModel FillData(int id)
         {
             dataTable = new DataTable();
-            dataTable = getIngredientClass.GetIngredientData(id);
+            dataTable = this._getIngredient.GetIngredientData(id);
             if (dataTable.Rows.Count == 1)
             {
                 ingredientEditModel.ID = Convert.ToInt32(dataTable.Rows[0][0].ToString());
@@ -36,7 +41,7 @@ namespace TanmiahCloneWithDatabase.Services
             return ingredientEditModel;
         }
     }
-    public class UpdateIngredient
+    public class UpdateIngredient : IUpdateIngredient
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -66,7 +71,7 @@ namespace TanmiahCloneWithDatabase.Services
     }
 
 
-    public class CreateIngredient
+    public class CreateIngredient : ICreateIngredient
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -94,7 +99,7 @@ namespace TanmiahCloneWithDatabase.Services
         }
     }
 
-    public class GetIngredient
+    public class GetIngredient : IGetIngredient
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;

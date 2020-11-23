@@ -35,7 +35,13 @@ namespace TanmiahCloneWithDatabase
             container.RegisterType<ICreateHeader, CreateHeader>();
             container.RegisterType<IGetHeader, GetHeader>();
             container.RegisterType<IHeaderCartService, HeaderCartService>();
-            
+
+            //Ingredient Interface Register
+            container.RegisterType<IUpdateIngredient, UpdateIngredient>();
+            container.RegisterType<ICreateIngredient, CreateIngredient>();
+            container.RegisterType<IGetIngredient, GetIngredient>();
+            container.RegisterType<IIngredientService, IngredientService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

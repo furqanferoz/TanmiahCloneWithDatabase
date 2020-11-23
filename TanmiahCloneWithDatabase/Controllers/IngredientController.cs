@@ -11,13 +11,28 @@ namespace TanmiahCloneWithDatabase.Controllers
     public class IngredientController : Controller
     {
         SqlCommand sqlCommand;
+        DataTable dataTable;
+        private IGetIngredient _getIngredient;
+        private ICreateIngredient _createIngredient;
+        private IUpdateIngredient _updateIngredient;
+        private IIngredientService _ingredientService;
+        private IngredientEditModel IngredientEditModel;
+
+        public IngredientController(IGetIngredient getIngredient, ICreateIngredient createIngredient, IUpdateIngredient updateIngredient, IIngredientService ingredientService, IngredientEditModel ingredientEditModel)
+        {
+            this._createIngredient = createIngredient;
+            this._getIngredient = getIngredient;
+            this._ingredientService = ingredientService;
+            this._updateIngredient = updateIngredient;
+            this.IngredientEditModel = ingredientEditModel;
+        }
+
         // GET: Ingredient
         public ActionResult Index()
         {
-            GetIngredient getIngredient = new GetIngredient();
             int ID = 1;
-            DataTable dataTable = new DataTable();
-            dataTable = getIngredient.GetIngredientData(ID);
+            dataTable = new DataTable();
+            dataTable = this._getIngredient.GetIngredientData(ID);
             return PartialView("_IngredientDetail", dataTable);
         }
 
@@ -37,13 +52,8 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Create(IngredientEditModel ingredientEditModel, HttpPostedFileBase Image)
         {
-            CreateIngredient createIngredient = new CreateIngredient();
-
             sqlCommand = new SqlCommand();
-
-            sqlCommand = createIngredient.CreateIngredientData(ingredientEditModel);
-
-
+            sqlCommand = this._createIngredient.CreateIngredientData(ingredientEditModel);
             return RedirectToAction("Index", "Home");
         }
 
@@ -52,12 +62,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: Ingredient/Edit/5
         public ActionResult Edit(int id)
         {
-            IngredientEditModel ingredientModel = new IngredientEditModel();
-            IngredientService ingredentService = new IngredientService();
-            ingredientModel = ingredentService.FillData(id);
-            if (ingredientModel != null)
+            this.IngredientEditModel = this._ingredientService.FillData(id);
+            if (this.IngredientEditModel != null)
             {
-                return View(ingredientModel);
+                return View(this.IngredientEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -70,7 +78,7 @@ namespace TanmiahCloneWithDatabase.Controllers
             string type = "Update";
             sqlCommand = new SqlCommand();
 
-            sqlCommand = updateIngredient.UpdateIngredientData(ingredientEditModel,type);
+            sqlCommand = updateIngredient.UpdateIngredientData(ingredientEditModel, type);
 
             return RedirectToAction("Index", "Home");
         }
@@ -78,12 +86,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: Ingredient/Delete/5
         public ActionResult Delete(int id)
         {
-            IngredientEditModel IngredientModel = new IngredientEditModel();
-            IngredientService ingredientService = new IngredientService();
-            IngredientModel = ingredientService.FillData(id);
-            if (IngredientModel != null)
+            this.IngredientEditModel = this._ingredientService.FillData(id);
+            if (this.IngredientEditModel != null)
             {
-                return View(IngredientModel);
+                return View(this.IngredientEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -92,13 +98,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Delete(IngredientEditModel ingredientEditModel)
         {
-            UpdateIngredient updateIngredient = new UpdateIngredient();
-
-            sqlCommand = new SqlCommand();
+           sqlCommand = new SqlCommand();
             try
             {
                 string type = "Delete";
-                sqlCommand = updateIngredient.UpdateIngredientData(ingredientEditModel, type);
+                sqlCommand = this._updateIngredient.UpdateIngredientData(ingredientEditModel, type);
             }
             catch (Exception ex)
             {

@@ -365,10 +365,14 @@
     <Compile Include="Infrefaces\HeaderCart\ICreateHeader.cs" />
     <Compile Include="Infrefaces\HeaderCart\IGetHeader.cs" />
     <Compile Include="Infrefaces\HeaderCart\IHeaderCartService.cs" />
+    <Compile Include="Infrefaces\Ingredient\ICreateIngredient.cs" />
+    <Compile Include="Infrefaces\Ingredient\IGetIngredient.cs" />
+    <Compile Include="Infrefaces\Ingredient\IIngredientService.cs" />
     <Compile Include="Services\IngredientService.cs" />
     <Compile Include="Infrefaces\BreadCrumb\IUpdateBreadCrumb.cs" />
     <Compile Include="Infrefaces\Cart\IUpdateCart.cs" />
     <Compile Include="Infrefaces\HeaderCart\IUpdateHeader.cs" />
+    <Compile Include="Infrefaces\Ingredient\IUpdateIngredient.cs" />
     <Compile Include="Services\RelatedItemsService.cs" />
   </ItemGroup>
   <ItemGroup>
