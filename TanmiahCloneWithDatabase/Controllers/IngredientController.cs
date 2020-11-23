@@ -63,11 +63,22 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Edit(int id)
         {
             this.IngredientEditModel = this._ingredientService.FillData(id);
-            if (this.IngredientEditModel != null)
+            if (this.IngredientEditModel.Carbohydrate != null && 
+                this.IngredientEditModel.DescriptionOne != null && 
+                this.IngredientEditModel.DescriptionSec != null && 
+                this.IngredientEditModel.Fat != null && 
+                this.IngredientEditModel.OrderTitle != null && 
+                this.IngredientEditModel.Protein != null && 
+                this.IngredientEditModel.Title != null && 
+                this.IngredientEditModel.TitleOne != null)
             {
                 return View(this.IngredientEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
+           
         }
 
         // POST: Ingredient/Edit/5
@@ -87,11 +98,22 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Delete(int id)
         {
             this.IngredientEditModel = this._ingredientService.FillData(id);
-            if (this.IngredientEditModel != null)
+            if (this.IngredientEditModel.Carbohydrate != null && 
+                this.IngredientEditModel.DescriptionOne != null &&
+                this.IngredientEditModel.DescriptionSec != null &&
+                this.IngredientEditModel.Fat != null && 
+                this.IngredientEditModel.OrderTitle != null &&
+                this.IngredientEditModel.Protein != null && 
+                this.IngredientEditModel.Title != null && 
+                this.IngredientEditModel.TitleOne != null)
             {
                 return View(this.IngredientEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
+           
         }
 
         // POST: Ingredient/Delete/5

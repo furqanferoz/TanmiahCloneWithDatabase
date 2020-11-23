@@ -84,11 +84,18 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Edit(int id)
         {
             this.HeaderCartEditModel = this._headerCartService.FillData(id);
-            if (this.HeaderCartEditModel != null)
+            if (this.HeaderCartEditModel.Description != null && 
+                this.HeaderCartEditModel.Image != null && 
+                this.HeaderCartEditModel.Name != null && 
+                this.HeaderCartEditModel.Tile != null)
             {
                 return View(this.HeaderCartEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
+            
         }
 
         // POST: HeaderCart/Edit/5
@@ -121,11 +128,17 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Delete(int id)
         {
             this.HeaderCartEditModel = this._headerCartService.FillData(id);
-            if (this.HeaderCartEditModel != null)
+            if (this.HeaderCartEditModel.Tile != null && 
+                this.HeaderCartEditModel.Name != null && 
+                this.HeaderCartEditModel.Image != null &&
+                this.HeaderCartEditModel.Description != null)
             {
                 return View(this.HeaderCartEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
         }
 
         // POST: HeaderCart/Delete/5

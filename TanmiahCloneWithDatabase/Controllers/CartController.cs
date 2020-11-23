@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -84,11 +85,17 @@ namespace TanmiahCloneWithDatabase.Controllers
         {
             
             this.CartEditModel = this._cartService.FillData(id);
-            if (this.CartEditModel != null)
+            if (this.CartEditModel.Image != null && 
+                this.CartEditModel.Title != null && 
+                this.CartEditModel.Description != null)
             {
                 return View(this.CartEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
+            
         }
 
         // POST: Cart/Edit/5
@@ -100,7 +107,6 @@ namespace TanmiahCloneWithDatabase.Controllers
             try
             {
                 if (Image != null)
-
                 {
                     string filename = System.IO.Path.GetFileName(Image.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
@@ -121,11 +127,16 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Delete(int id)
         {
             this.CartEditModel = this._cartService.FillData(id);
-            if (this.CartEditModel != null)
+            if (this.CartEditModel.Title != null && 
+                this.CartEditModel.Image != null && 
+                this.CartEditModel.Description != null)
             {
                 return View(this.CartEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
         }
 
         // POST: Cart/Delete/5

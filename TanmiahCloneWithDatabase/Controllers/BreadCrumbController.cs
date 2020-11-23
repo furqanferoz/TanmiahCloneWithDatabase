@@ -67,13 +67,18 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: BreadCrumb/Edit/5
         public ActionResult Edit(int id)
         {
-           
+
             this.BreadCrumbModel = this._breadCrumbService.FillData(id);
-            if (this.BreadCrumbModel != null)
+            if (this.BreadCrumbModel.MainLink != null && 
+                this.BreadCrumbModel.Link != null &&
+                this.BreadCrumbModel.SubLink != null)
             {
                 return View(this.BreadCrumbModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
         }
 
         // POST: BreadCrumb/Edit/5
@@ -90,11 +95,17 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Delete(int id)
         {
             this.BreadCrumbModel = this._breadCrumbService.FillData(id);
-            if (this.BreadCrumbModel != null)
+            if (this.BreadCrumbModel.Link != null && 
+                this.BreadCrumbModel.MainLink != null && 
+                this.BreadCrumbModel.SubLink != null)
             {
                 return View(this.BreadCrumbModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
+           
         }
 
         // POST: BreadCrumb/Delete/5

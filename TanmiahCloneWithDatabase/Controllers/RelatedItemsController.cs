@@ -80,11 +80,17 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Edit(int id)
         {
             this.RelatedItemsEditModel = this._RelatedItemsService.FillData(id);
-            if (this.RelatedItemsEditModel != null)
+            if (this.RelatedItemsEditModel.Description != null && 
+                this.RelatedItemsEditModel.Image != null && 
+                this.RelatedItemsEditModel.Name != null && 
+                this.RelatedItemsEditModel.Title != null)
             {
                 return View(this.RelatedItemsEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
         }
 
         // POST: RelatedItems/Edit/5
@@ -116,11 +122,17 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Delete(int id)
         {
             this.RelatedItemsEditModel = this._RelatedItemsService.FillData(id);
-            if (this.RelatedItemsEditModel != null)
+            if (this.RelatedItemsEditModel.Description != null &&
+                this.RelatedItemsEditModel.Image != null &&
+                this.RelatedItemsEditModel.Name != null &&
+                this.RelatedItemsEditModel.Title != null)
             {
                 return View(this.RelatedItemsEditModel);
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return PartialView("_404");
+            }
         }
 
         // POST: RelatedItems/Delete/5
