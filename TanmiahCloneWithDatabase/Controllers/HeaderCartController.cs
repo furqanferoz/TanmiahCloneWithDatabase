@@ -14,16 +14,31 @@ namespace TanmiahCloneWithDatabase.Controllers
 {
     public class HeaderCartController : Controller
     {
+
         SqlCommand sqlCommand;
+        private IUpdateHeader _updateHeader;
+        private ICreateHeader _createHeader;
+        private IGetHeader _getHeader;
+        private IHeaderCartService _headerCartService;
+        private HeaderCartEditModel HeaderCartEditModel;
+
+        public HeaderCartController(IUpdateHeader updateHeader, ICreateHeader createHeader, IGetHeader getHeader,
+            IHeaderCartService headerCartService, HeaderCartEditModel headerCartEditModel)
+        {
+            this._updateHeader = updateHeader;
+            this._createHeader = createHeader;
+            this._getHeader = getHeader;
+            this._headerCartService = headerCartService;
+            this.HeaderCartEditModel = headerCartEditModel;
+        }
 
         [HttpGet]
         // GET: HeaderCart
         public ActionResult Index()
         {
-            GetHeader getHeader = new GetHeader();
             int ID = 1;
             DataTable dataTable = new DataTable();
-            dataTable = getHeader.GetHeaderData(ID);
+            dataTable = this._getHeader.GetHeaderData(ID);
             return PartialView("_HeaderCart", dataTable);
         }
 
@@ -42,14 +57,11 @@ namespace TanmiahCloneWithDatabase.Controllers
         // POST: HeaderCart/Create
         [HttpPost]
         public ActionResult Create(HeaderCartEditModel headerCartEditModel, HttpPostedFileBase Image)
-        {
-            CreateHeader createHeader = new CreateHeader();
-
+        { 
             sqlCommand = new SqlCommand();
             try
             {
                 if (Image != null)
-
                 {
                     string filename = System.IO.Path.GetFileName(Image.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
@@ -57,7 +69,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
-                sqlCommand = createHeader.CreateHeaderData(headerCartEditModel);
+                sqlCommand = this._createHeader.CreateHeaderData(headerCartEditModel);
             }
             catch (Exception)
             {
@@ -71,22 +83,18 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: HeaderCart/Edit/5
         public ActionResult Edit(int id)
         {
-            HeaderCartEditModel headerCartModel = new HeaderCartEditModel();
-            HeaderCartService headerCartService = new HeaderCartService();
-            headerCartModel = headerCartService.FillData(id);
-            if (headerCartModel != null)
+            this.HeaderCartEditModel = this._headerCartService.FillData(id);
+            if (this.HeaderCartEditModel != null)
             {
-                return View(headerCartModel);
+                return View(this.HeaderCartEditModel);
             }
             return RedirectToAction("Index");
-
         }
 
         // POST: HeaderCart/Edit/5
         [HttpPost]
         public ActionResult Edit(HeaderCartEditModel headerCartEditModel, HttpPostedFileBase Image)
         {
-            UpdateHeader updateHeader = new UpdateHeader();
             string type = "Update";
             sqlCommand = new SqlCommand();
             try
@@ -100,7 +108,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                     Image.SaveAs(path);
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
-                sqlCommand = updateHeader.UpdateHeaderData(headerCartEditModel, type);
+                sqlCommand = this._updateHeader.UpdateHeaderData(headerCartEditModel, type);
             }
             catch (Exception)
             {
@@ -112,12 +120,10 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: HeaderCart/Delete/5
         public ActionResult Delete(int id)
         {
-            HeaderCartEditModel headerCartModel = new HeaderCartEditModel();
-            HeaderCartService headerCartService = new HeaderCartService();
-            headerCartModel = headerCartService.FillData(id);
-            if (headerCartModel != null)
+            this.HeaderCartEditModel = this._headerCartService.FillData(id);
+            if (this.HeaderCartEditModel != null)
             {
-                return View(headerCartModel);
+                return View(this.HeaderCartEditModel);
             }
             return RedirectToAction("Index");
         }
@@ -125,14 +131,12 @@ namespace TanmiahCloneWithDatabase.Controllers
         // POST: HeaderCart/Delete/5
         [HttpPost]
         public ActionResult Delete(HeaderCartEditModel headerCartEditModel)
-        {
-            UpdateHeader updateHeader = new UpdateHeader();
-
+        { 
             sqlCommand = new SqlCommand();
             try
             {
                 string type = "Delete";
-                sqlCommand = updateHeader.UpdateHeaderData(headerCartEditModel, type);
+                sqlCommand = this._updateHeader.UpdateHeaderData(headerCartEditModel, type);
             }
             catch (Exception ex)
             {

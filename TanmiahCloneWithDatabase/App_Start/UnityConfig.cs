@@ -30,7 +30,7 @@ namespace TanmiahCloneWithDatabase
             container.RegisterType<IGetCart, GetCart>();
             container.RegisterType<ICartService, CartService>();
 
-          
+            //Header Interface Register
             container.RegisterType<IUpdateHeader, UpdateHeader>();
             container.RegisterType<ICreateHeader, CreateHeader>();
             container.RegisterType<IGetHeader, GetHeader>();
