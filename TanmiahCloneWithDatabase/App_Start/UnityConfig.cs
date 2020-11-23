@@ -31,10 +31,11 @@ namespace TanmiahCloneWithDatabase
             container.RegisterType<ICartService, CartService>();
 
             //HeaderCart Interface Register
-
-
-
-
+            container.RegisterType<IUpdateHeader, UpdateHeader>();
+            container.RegisterType<ICreateHeader, CreateHeader>();
+            container.RegisterType<IGetHeader, GetHeader>();
+            container.RegisterType<IHeaderCartService, HeaderCartService>();
+            
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
