@@ -10,22 +10,16 @@ using TanmiahCloneWithDatabase.Models;
 using SqlItmes;
 namespace TanmiahCloneWithDatabase.Services
 {
-    public class HeaderCartService : IHeaderCartService
+    public class HeaderCartService
     {
-       
+        GetHeader getHeaderClass = new GetHeader();
         HeaderCartEditModel headerCartEditModel = new HeaderCartEditModel();
         DataTable dataTable;
-        private IGetHeader _getHeader;
-
-        public HeaderCartService(IGetHeader getHeader)
-        {
-            this._getHeader = getHeader;
-        }
 
         public HeaderCartEditModel FillData(int id)
         {
             dataTable = new DataTable();
-            dataTable = this._getHeader.GetHeaderData(id);
+            dataTable = getHeaderClass.GetHeaderData(id);
             if (dataTable.Rows.Count == 1)
             {
                 headerCartEditModel.ID = Convert.ToInt32(dataTable.Rows[0][0]);
@@ -40,7 +34,7 @@ namespace TanmiahCloneWithDatabase.Services
     }
 
 
-    public class GetHeader : IGetHeader
+    public class GetHeader
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -64,7 +58,7 @@ namespace TanmiahCloneWithDatabase.Services
     }
 
 
-    public class UpdateHeader : IUpdateHeader
+    public class UpdateHeader
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
@@ -88,7 +82,7 @@ namespace TanmiahCloneWithDatabase.Services
         }
     }
 
-    public class CreateHeader : ICreateHeader
+    public class CreateHeader
     {
         SqlCommand sqlCommand;
         SqlConnection sqlConnection;
