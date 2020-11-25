@@ -247,6 +247,10 @@
     <script src="~/Content/Common/js/lib/swiper.reducer.js"></script>
     <script src="~/Content/Common/js/lib/parallax/parallax.min.js"></script>
     <script src="~/Content/Common/js/default.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

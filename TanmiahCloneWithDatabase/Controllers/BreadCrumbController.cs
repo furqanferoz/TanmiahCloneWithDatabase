@@ -50,6 +50,7 @@ namespace TanmiahCloneWithDatabase.Controllers
         }
 
         // GET: BreadCrumb/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
@@ -57,11 +58,17 @@ namespace TanmiahCloneWithDatabase.Controllers
 
         // POST: BreadCrumb/Create
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(BreadCrumbModel breadCrumbModel)
         {
-            sqlCommand = new SqlCommand();
-            sqlCommand = this._createBreadCrumb.CreateBreadCrumbData(breadCrumbModel);
-            return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                sqlCommand = new SqlCommand();
+                sqlCommand = this._createBreadCrumb.CreateBreadCrumbData(breadCrumbModel);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(BreadCrumbModel);
         }
 
         // GET: BreadCrumb/Edit/5
