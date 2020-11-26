@@ -5041,7 +5041,7 @@ input[type=submit] {
   cursor: pointer; }
 
 .field-validation-error {
-  display: none !important; }
+  display: contents }
 
 .team-listing {
   margin-top: 47px; }

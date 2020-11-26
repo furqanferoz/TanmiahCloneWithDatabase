@@ -97,27 +97,33 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(BreadCrumbModel breadCrumb)
         {
-            if(string.IsNullOrEmpty(breadCrumb.MainLink) || string.IsNullOrWhiteSpace(breadCrumb.MainLink))
-            {
-               ViewBag.MainLink = "Please provide MainLink";
-            }
-            if(string.IsNullOrEmpty(breadCrumb.Link) || string.IsNullOrWhiteSpace(breadCrumb.Link))
-            {
-                ViewBag.Link = "Please provide MainLink";
-            }
-            if (string.IsNullOrEmpty(breadCrumb.SubLink) || string.IsNullOrWhiteSpace(breadCrumb.SubLink))
-            {
-                ViewBag.SubLink = "Please provide MainLink";
-            }
+            //if(string.IsNullOrEmpty(breadCrumb.MainLink) || string.IsNullOrWhiteSpace(breadCrumb.MainLink))
+            //{
+            //   ViewBag.MainLink = "Please provide MainLink";
+            //}
+            //if(string.IsNullOrEmpty(breadCrumb.Link) || string.IsNullOrWhiteSpace(breadCrumb.Link))
+            //{
+            //    ViewBag.Link = "Please provide MainLink";
+            //}
+            //if (string.IsNullOrEmpty(breadCrumb.SubLink) || string.IsNullOrWhiteSpace(breadCrumb.SubLink))
+            //{
+            //    ViewBag.SubLink = "Please provide MainLink";
+            //}
             if (ModelState.IsValid)
             {
                 string type = "Update";
                 sqlCommand = new SqlCommand();
                 sqlCommand = this._updateBreadCrumb.UpdateBreadCrumbData(breadCrumb, type);
+                
                 return RedirectToAction("Index", "Home");
 
             }
-            return View(breadCrumb);
+            else
+            {
+                
+                return View();
+            }
+           
         }
 
         // GET: BreadCrumb/Delete/5
