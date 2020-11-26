@@ -76,26 +76,48 @@ namespace TanmiahCloneWithDatabase.Controllers
         {
 
             this.BreadCrumbModel = this._breadCrumbService.FillData(id);
-            if (this.BreadCrumbModel.MainLink != null && 
-                this.BreadCrumbModel.Link != null &&
-                this.BreadCrumbModel.SubLink != null)
+            if (ModelState.IsValid)
             {
-                return View(this.BreadCrumbModel);
+                if (this.BreadCrumbModel.MainLink != null &&
+               this.BreadCrumbModel.Link != null &&
+               this.BreadCrumbModel.SubLink != null)
+                {
+                    return View(this.BreadCrumbModel);
+                }
+                else
+                {
+                    return PartialView("_404");
+                }
             }
-            else
-            {
-                return PartialView("_404");
-            }
+
+            return PartialView("_404");
         }
 
         // POST: BreadCrumb/Edit/5
         [HttpPost]
         public ActionResult Edit(BreadCrumbModel breadCrumb)
         {
-            string type = "Update";
-            sqlCommand = new SqlCommand();
-            sqlCommand = this._updateBreadCrumb.UpdateBreadCrumbData(breadCrumb, type);
-            return RedirectToAction("Index", "Home");
+            if(string.IsNullOrEmpty(breadCrumb.MainLink) || string.IsNullOrWhiteSpace(breadCrumb.MainLink))
+            {
+               ViewBag.MainLink = "Please provide MainLink";
+            }
+            if(string.IsNullOrEmpty(breadCrumb.Link) || string.IsNullOrWhiteSpace(breadCrumb.Link))
+            {
+                ViewBag.Link = "Please provide MainLink";
+            }
+            if (string.IsNullOrEmpty(breadCrumb.SubLink) || string.IsNullOrWhiteSpace(breadCrumb.SubLink))
+            {
+                ViewBag.SubLink = "Please provide MainLink";
+            }
+            if (ModelState.IsValid)
+            {
+                string type = "Update";
+                sqlCommand = new SqlCommand();
+                sqlCommand = this._updateBreadCrumb.UpdateBreadCrumbData(breadCrumb, type);
+                return RedirectToAction("Index", "Home");
+
+            }
+            return View(breadCrumb);
         }
 
         // GET: BreadCrumb/Delete/5
