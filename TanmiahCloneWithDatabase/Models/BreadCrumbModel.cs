@@ -11,18 +11,12 @@ namespace TanmiahCloneWithDatabase.Models
 
         public int ID { get; set; }
 
-        
-        
         [Required]
         public string MainLink { get; set; }
 
-       
-        
         [Required]
         public string Link { get; set; }
 
-        
-        
         [Required]
         public string SubLink { get; set; }
 

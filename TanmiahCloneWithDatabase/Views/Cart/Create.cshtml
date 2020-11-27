@@ -1,4 +1,5 @@
 ﻿@model TanmiahCloneWithDatabase.Models.CartEditModel
+    @using System.Web.Optimization
 
 @{
     ViewBag.Title = "Create";
@@ -7,58 +8,101 @@
 
 <h3 class="container" style="padding-top:100px; padding-left:28px">Create a New Card Component</h3>
 <hr />
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Cart", FormMethod.Post, new { @id = "CartForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal container center" style="padding-top:25px">
+    <div class="form-horizontal container center" style="padding-top:25px">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10 animated-label">
+                @Html.EditorFor(model => model.Title, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control text-field",
+                        data_val = "true",
+                        id = "field-Title",
+                        maxlength = "50",
+                        type = "text"
+                    }
+                })
+                <label class="col-md-10" for="field-Title"><b>Title</b></label>
+                <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+            </div>
+            <span class="error-icon"></span>
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-10 animated-label">
+
+                @Html.EditorFor(model => model.Description, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control text-field",
+                        data_val = "true",
+                        id = "field-Link",
+                        maxlength = "50",
+                        type = "text"
+                    }
+                })
+                <label class="col-md-10" for="field-Description"><b>Description</b></label>
+                <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+            </div>
+            <span class="error-icon"></span>
+        </div>
+
+        <div class="form-group col-md-10">
+            <img src="@ViewBag.ImageUrl" style="width:280px; height:150px">
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control text-field",
+                        data_val = "true",
+                        id = "field-Link",
+                        type = "file"
+                    }
+                })
+                <label class="col-md-10" for="field-Image"><b>Image</b></label>
+                <span class="field-validation-valid" data-valmsg-for="Image" data-valmsg-replace="true"></span>
+
+            </div>
+            <span class="error-icon"></span>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 text-success">
+                @ViewBag.FileStatus
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default btn-primary" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group col-md-10">
-        <img src="@ViewBag.ImageUrl" style="width:280px; height:150px">
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", @type = "file" } })
-            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10 text-success">
-            @ViewBag.FileStatus
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default btn-primary" />
-        </div>
-    </div>
-</div>
 }
 <script>
-var loadFile = function(event) {
-	var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
-};
+    var loadFile = function (event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery.validate.js")
+    @Scripts.Render("~/scripts/cart-script-custom-validator.js")
+}
+
 
 

@@ -70,7 +70,7 @@ namespace TanmiahCloneWithDatabase.Controllers
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
                 sqlCommand = this._createCart.CreateCartData(cartEditModel);
-                ViewBag.ImageUrl = "~/ UploadedFiles" + filename;
+                ViewBag.ImageUrl = "~/UploadedFiles" + filename;
             }
             catch (Exception)
             {

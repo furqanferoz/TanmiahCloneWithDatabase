@@ -37,10 +37,26 @@ namespace TanmiahCloneWithDatabase.Controllers
         // GET: BreadCrumb
         public ActionResult Index()
         {
-            int id = 1;
-            dataTable = new DataTable();
-            dataTable = this._getBreadCrumb.GetBreadCrumbData(id);
-            return PartialView("_BreadCrumb", dataTable);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    int id = 1;
+                    dataTable = new DataTable();
+                    dataTable = this._getBreadCrumb.GetBreadCrumbData(id);
+                    return PartialView("_BreadCrumb", dataTable);
+                }
+                else
+                {
+                    TempData["Msg"] = "Component Not Found!".ToString();
+                    return View();
+                }
+            }
+            catch(Exception ex)
+            {
+                TempData["Msg"] = "Component Not Found!" + ex;
+               return View();
+            }
         }
 
         // GET: BreadCrumb/Details/5
@@ -97,18 +113,6 @@ namespace TanmiahCloneWithDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(BreadCrumbModel breadCrumb)
         {
-            //if(string.IsNullOrEmpty(breadCrumb.MainLink) || string.IsNullOrWhiteSpace(breadCrumb.MainLink))
-            //{
-            //   ViewBag.MainLink = "Please provide MainLink";
-            //}
-            //if(string.IsNullOrEmpty(breadCrumb.Link) || string.IsNullOrWhiteSpace(breadCrumb.Link))
-            //{
-            //    ViewBag.Link = "Please provide MainLink";
-            //}
-            //if (string.IsNullOrEmpty(breadCrumb.SubLink) || string.IsNullOrWhiteSpace(breadCrumb.SubLink))
-            //{
-            //    ViewBag.SubLink = "Please provide MainLink";
-            //}
             if (ModelState.IsValid)
             {
                 string type = "Update";
@@ -116,11 +120,9 @@ namespace TanmiahCloneWithDatabase.Controllers
                 sqlCommand = this._updateBreadCrumb.UpdateBreadCrumbData(breadCrumb, type);
                 
                 return RedirectToAction("Index", "Home");
-
             }
             else
             {
-                
                 return View();
             }
            

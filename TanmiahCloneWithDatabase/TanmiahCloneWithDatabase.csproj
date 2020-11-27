@@ -332,6 +332,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\breadcrumb-script-custom-validator.js" />
+    <Content Include="Scripts\RelatedItems-script-custom-validator.js" />
+    <Content Include="Scripts\ingredient-script-custom-validator.js" />
+    <Content Include="Scripts\header-script-custom-validator.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -340,7 +344,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\breadcrumb-script-custom-validator.js" />
+    <Content Include="Scripts\cart-script-custom-validator.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
