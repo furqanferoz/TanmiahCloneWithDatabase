@@ -1,5 +1,5 @@
 ﻿@model TanmiahCloneWithDatabase.Models.CartEditModel
-    @using System.Web.Optimization
+@using System.Web.Optimization
 
 @{
     ViewBag.Title = "Create";
@@ -12,85 +12,97 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal container center" style="padding-top:25px">
+<div class="form-horizontal container center" style="padding-top:25px">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="col-md-10 animated-label">
-                @Html.EditorFor(model => model.Title, new
+    <div class="form-group">
+        <div class="col-md-10 animated-label">
+            @Html.EditorFor(model => model.Title, new
+            {
+                htmlAttributes = new
                 {
-                    htmlAttributes = new
-                    {
-                        @class = "form-control text-field",
-                        data_val = "true",
-                        id = "field-Title",
-                        maxlength = "50",
-                        type = "text"
-                    }
-                })
-                <label class="col-md-10" for="field-Title"><b>Title</b></label>
-                <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
-            </div>
-            <span class="error-icon"></span>
+                    @class = "form-control text-field",
+                    data_val = "true",
+                    id = "field-Title",
+                    maxlength = "50",
+                    type = "text"
+                }
+            })
+            <label class="col-md-10" for="field-Title"><b>Title</b></label>
+            <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
         </div>
+        <span class="error-icon"></span>
+    </div>
 
-        <div class="form-group">
+    <div class="form-group">
 
-            <div class="col-md-10 animated-label">
+        <div class="col-md-10 animated-label">
 
-                @Html.EditorFor(model => model.Description, new
+            @Html.EditorFor(model => model.Description, new
+            {
+                htmlAttributes = new
                 {
-                    htmlAttributes = new
-                    {
-                        @class = "form-control text-field",
-                        data_val = "true",
-                        id = "field-Link",
-                        maxlength = "50",
-                        type = "text"
-                    }
-                })
-                <label class="col-md-10" for="field-Description"><b>Description</b></label>
-                <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
-            </div>
-            <span class="error-icon"></span>
+                    @class = "form-control text-field",
+                    data_val = "true",
+                    id = "field-Link",
+                    maxlength = "50",
+                    type = "text"
+                }
+            })
+            <label class="col-md-10" for="field-Description"><b>Description</b></label>
+            <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
         </div>
+        <span class="error-icon"></span>
+    </div>
 
-        <div class="form-group col-md-10">
-            <img src="@ViewBag.ImageUrl" style="width:280px; height:150px">
-        </div>
+    <div class="form-group col-md-10">
+        <img src="@ViewBag.ImageUrl" id="user_img" style="width:280px; height:150px">
+    </div>
 
-        <div class="form-group">
+    <div class="form-group">
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Image, new
-                {
-                    htmlAttributes = new
-                    {
-                        @class = "form-control text-field",
-                        data_val = "true",
-                        id = "field-Link",
-                        type = "file"
-                    }
-                })
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control text-field",
+                   data_val = "true",
+                   id = "file",
+                   type = "file",
+                   onchange = "show(this)"
+               }
+
+           })
                 <label class="col-md-10" for="field-Image"><b>Image</b></label>
                 <span class="field-validation-valid" data-valmsg-for="Image" data-valmsg-replace="true"></span>
 
             </div>
             <span class="error-icon"></span>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 text-success">
-                @ViewBag.FileStatus
-            </div>
+
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", @type = "file" } })
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
         </div>
+    </div>*@
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default btn-primary" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 text-success">
+            @ViewBag.FileStatus
         </div>
     </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default btn-primary" />
+        </div>
+    </div>
+</div>
 }
 <script>
     var loadFile = function (event) {
@@ -98,6 +110,18 @@
         image.src = URL.createObjectURL(event.target.files[0]);
     };
 </script>
+<script type="text/javascript">
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/scripts/jquery.validate.js")

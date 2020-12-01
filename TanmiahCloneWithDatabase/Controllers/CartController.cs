@@ -1,14 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 using TanmiahCloneWithDatabase.Models;
 using TanmiahCloneWithDatabase.Services;
+using System.IO;
 
 namespace TanmiahCloneWithDatabase.Controllers
 {
@@ -57,20 +57,19 @@ namespace TanmiahCloneWithDatabase.Controllers
         public ActionResult Create(CartEditModel cartEditModel, HttpPostedFileBase Image)
         {
             sqlCommand = new SqlCommand();
-            string filename = "";
             try
             {
                 if (Image != null)
-
                 {
-                    filename = System.IO.Path.GetFileName(Image.FileName);
+                    string filename = System.IO.Path.GetFileName(Image.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
                     cartEditModel.Image = Image.FileName;
                     Image.SaveAs(path);
+                    ViewBag.ImageUrl = "~/UploadedFiles" + filename;
                 }
                 ViewBag.FileStatus = "File uploaded successfully.";
                 sqlCommand = this._createCart.CreateCartData(cartEditModel);
-                ViewBag.ImageUrl = "~/UploadedFiles" + filename;
+               
             }
             catch (Exception)
             {

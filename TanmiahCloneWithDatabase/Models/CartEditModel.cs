@@ -16,7 +16,9 @@ namespace TanmiahCloneWithDatabase.Models
         [Required]
         public string Description { get; set; }
 
-        [Required]
+        [DataType(DataType.Upload)]
+        [Display(Name = "Upload File")]
+        [Required(ErrorMessage = "Please choose file to upload.")]
         public string Image { get; set; }
 
     }
