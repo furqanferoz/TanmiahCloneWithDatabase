@@ -36,7 +36,7 @@ namespace TanmiahCloneWithDatabase.Controllers
         {
             DataTable dataTable = new DataTable();
             dataTable = this._getRelatedItems.GetRelatedItemsData();
-            return PartialView("_RelatedItems", dataTable);
+            return PartialView("_RelatedItems",dataTable);
         }
 
         // GET: RelatedItems/Details/5
